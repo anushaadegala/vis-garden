@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Project 2</title>
+
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script type="text/javascript" src="js/dictionary.js"></script>
+<script type="text/javascript" src="js/mapping.js"></script>
+<script type="text/javascript" src="js/function.js"></script>
+
+<link rel="stylesheet" href="css/style.css">
+
+<!-- for FF, Chrome, Opera -->
+<link rel="icon" type="image/png" href="image/icon/favicon-small.png" sizes="16x16" />
+<link rel="icon" type="image/png" href="image/icon/favicon-large.png" sizes="32x32" />
+
+<!-- for IE -->
+<link rel="icon" type="image/x-icon" href="image/icon/favicon.ico" />
+<link rel="shortcut icon" type="image/x-icon" href="image/icon/favicon.ico" />
+
+
+</head>
+
+
+<body>
+
+<script type="text/javascript">
+	/*
+	//get the amount of imports and exports for a state with country basis to interact with the map
+	var pupuset = getImportNExport4State(["Alabama"], 
+										 ["2013","2014","2015","2016"], 
+										 ["S","N","All"],
+										 ["0"]);*/
+	
+	
+	/*
+	//get the amount of imports and exports for a state with commodity basis to interact with the map
+	var pupuset = getImportNExport4State(["Alabama"], 
+										 ["2013","2014","2015","2016"], 
+										 ["0"],
+										 ["S","N","All"]);*/
+	
+	/*
+	//get the country information with big picture of a pie chart of import data
+	var pupuset = getPieChart4Country(["Alabama"], 
+										 ["2013","2014","2015","2016"], 
+										 ["B","N","All"],
+										 ["0"],
+									 	 "I");*/
+	
+	/*
+	//get the country information with small picture of a pie chart of import data
+	var pupuset = getPieChart4Country(["Alabama"], 
+										 ["2013","2014","2015","2016"], 
+										 ["S","N","All"],
+										 ["0"],
+									 	 "I");*/
+	
+	/*//get the country information with big picture of a pie chart of export data
+	var pupuset = getPieChart4Country(["Alabama"], 
+										 ["2014","2015"], 
+										 ["B","N","All"],
+										 ["0"],
+									 	 "E");*/
+	
+	
+	//get the country information with small picture of a pie chart of export data
+	var pupuset = getPieChart4Country(["Alabama"], 
+										 ["2013","2014"], 
+										 ["S","N","All"],
+										 ["0"],
+									 	 "E");
+	
+	console.log(pupuset);
+	
+    var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
+							11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];	
+			d3.select("body").selectAll("div")
+				.data(dataset)
+				.enter()
+				.append("div")
+				.attr("class", "bar")
+				.style("height", function(d) {
+					var barHeight = d * 5;
+					return barHeight + "px";
+				});
+	</script>
+
+</body>
+</html>
