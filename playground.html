@@ -26,54 +26,146 @@
 <body>
 
 <script type="text/javascript">
-	/*
-	//get the amount of imports and exports for a state with country basis to interact with the map
-	var pupuset = getImportNExport4State(["Alabama"], 
+	
+	//
+	var pupuset = getImportNExport4AState(["California"], 
 										 ["2013","2014","2015","2016"], 
 										 ["S","N","All"],
-										 ["0"]);*/
+										 ["0"]);
 	
 	
-	/*
-	//get the amount of imports and exports for a state with commodity basis to interact with the map
-	var pupuset = getImportNExport4State(["Alabama"], 
+	
+	/*//
+	var pupuset = getImportNExport4AState(["Alabama"], 
 										 ["2013","2014","2015","2016"], 
 										 ["0"],
 										 ["S","N","All"]);*/
 	
-	/*
-	//get the country information with big picture of a pie chart of import data
-	var pupuset = getPieChart4Country(["Alabama"], 
+	
+	/*//
+	var pupuset = getCountry4AState(["Alabama"], 
 										 ["2013","2014","2015","2016"], 
 										 ["B","N","All"],
 										 ["0"],
 									 	 "I");*/
 	
-	/*
-	//get the country information with small picture of a pie chart of import data
-	var pupuset = getPieChart4Country(["Alabama"], 
+	
+	/*//
+	var pupuset = getCountry4AState(["California"], 
 										 ["2013","2014","2015","2016"], 
 										 ["S","N","All"],
 										 ["0"],
 									 	 "I");*/
 	
-	/*//get the country information with big picture of a pie chart of export data
-	var pupuset = getPieChart4Country(["Alabama"], 
+	/*//
+	var pupuset = getCountry4AState(["Alabama"], 
 										 ["2014","2015"], 
 										 ["B","N","All"],
 										 ["0"],
 									 	 "E");*/
 	
 	
-	//get the country information with small picture of a pie chart of export data
-	var pupuset = getPieChart4Country(["Alabama"], 
+	/*//
+	var pupuset = getCountry4AState(["Alabama"], 
 										 ["2013","2014"], 
 										 ["S","N","All"],
 										 ["0"],
-									 	 "E");
+									 	 "E");*/
+	
+	/*//
+	var pupuset = getCommodity4AState(["Alabama"], 
+										 ["2013","2014","2015","2016"], 
+										 ["0"],
+										 ["B","N","All"],
+									 	 "I");*/
+	
+	
+	/*//
+	var pupuset = getCommodity4AState(["Alabama"], 
+										 ["2013","2014","2015","2016"], 
+										 ["0"],
+										 ["S","N","All"],
+									 	 "I");*/
+	
+	/*//
+	var pupuset = getCommodity4AState(["Alabama"], 
+										 ["2014","2015"], 
+										 ["0"],
+										 ["B","N","All"],
+									 	 "E");*/
+	
+	
+	
+	/*//
+	var pupuset = getCommodity4AState(["Alabama"], 
+										 ["2013","2014"],
+										 ["0"],
+										 ["S","N","All"],
+									 	 "E");*/
+	
+	/*//
+	var pupuset = getCountry4AllStates(["All"], 
+										 ["2013","2014","2015","2016"], 
+										 ["S","N","All"],
+										 ["0"],
+									 	 "I");*/
+	
+	
+	/*//
+	var pupuset = getCountry4AllStates(["All"], 
+										 ["2013","2014"], 
+										 ["S","N","All"],
+										 ["0"],
+									 	 "E");*/
+	
+	/*//
+	var pupuset = getState4ACountry(["All"], 
+										 ["2013","2014","2015","2016"], 
+										 ["S","N","Taiwan"],
+										 ["0"],
+									 	 "I");*/
+	
+	
+	/*//
+	var pupuset = getState4ACountry(["All"], 
+										 ["2013","2014"], 
+										 ["S","N","Taiwan"],
+										 ["0"],
+									 	 "E");*/
+	
+	/*//
+	var pupuset = getCommodity4AllStates(["All"], 
+										 ["2013","2014","2015","2016"],
+										 ["0"],
+										 ["S","N",""],
+									 	 "I");*/
+	
+	
+	/*//
+	var pupuset = getCommodity4AllStates(["All"], 
+										 ["2013","2014"], 
+										 ["0"],
+										 ["S","N",""],
+									 	 "E");*/
+	
+	/*//
+	var pupuset = getState4ACommodity(["All"], 
+										 ["2013","2014","2015","2016"],
+										 ["0"],
+										 ["S","N","Nuclear Reactors, Boilers, Machinery and Mechanical Appliance and Parts Thereof"],
+									 	 "I");*/
+	
+	
+	/*//
+	var pupuset = getState4ACommodity(["All"], 
+										 ["2013","2014"], 
+										 ["0"],
+										 ["S","N","Nuclear Reactors, Boilers, Machinery and Mechanical Appliance and Parts Thereof"],
+									 	 "E");*/
 	
 	console.log(pupuset);
 	
+	//a bar chart
     var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
 							11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];	
 			d3.select("body").selectAll("div")
