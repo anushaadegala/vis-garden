@@ -1,0 +1,183 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Project 2</title>
+
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script type="text/javascript" src="js/dictionary.js"></script>
+<script type="text/javascript" src="js/mapping.js"></script>
+<script type="text/javascript" src="js/function.js"></script>
+
+<link rel="stylesheet" href="css/style.css">
+
+<!-- for FF, Chrome, Opera -->
+<link rel="icon" type="image/png" href="image/icon/favicon-small.png" sizes="16x16" />
+<link rel="icon" type="image/png" href="image/icon/favicon-large.png" sizes="32x32" />
+
+<!-- for IE -->
+<link rel="icon" type="image/x-icon" href="image/icon/favicon.ico" />
+<link rel="shortcut icon" type="image/x-icon" href="image/icon/favicon.ico" />
+
+
+</head>
+
+
+<body>
+
+<script type="text/javascript">
+	
+	//
+	var pupuset = getImportNExport4AState(["California"], 
+										 ["2013","2014","2015","2016"], 
+										 ["S","N","All"],
+										 ["0"]);
+	
+	
+	
+	/*//
+	var pupuset = getImportNExport4AState(["Alabama"], 
+										 ["2013","2014","2015","2016"], 
+										 ["0"],
+										 ["S","N","All"]);*/
+	
+	
+	/*//
+	var pupuset = getCountry4AState(["Alabama"], 
+										 ["2013","2014","2015","2016"], 
+										 ["B","N","All"],
+										 ["0"],
+									 	 "I");*/
+	
+	
+	/*//
+	var pupuset = getCountry4AState(["California"], 
+										 ["2013","2014","2015","2016"], 
+										 ["S","N","All"],
+										 ["0"],
+									 	 "I");*/
+	
+	/*//
+	var pupuset = getCountry4AState(["Alabama"], 
+										 ["2014","2015"], 
+										 ["B","N","All"],
+										 ["0"],
+									 	 "E");*/
+	
+	
+	/*//
+	var pupuset = getCountry4AState(["Alabama"], 
+										 ["2013","2014"], 
+										 ["S","N","All"],
+										 ["0"],
+									 	 "E");*/
+	
+	/*//
+	var pupuset = getCommodity4AState(["Alabama"], 
+										 ["2013","2014","2015","2016"], 
+										 ["0"],
+										 ["B","N","All"],
+									 	 "I");*/
+	
+	
+	/*//
+	var pupuset = getCommodity4AState(["Alabama"], 
+										 ["2013","2014","2015","2016"], 
+										 ["0"],
+										 ["S","N","All"],
+									 	 "I");*/
+	
+	/*//
+	var pupuset = getCommodity4AState(["Alabama"], 
+										 ["2014","2015"], 
+										 ["0"],
+										 ["B","N","All"],
+									 	 "E");*/
+	
+	
+	
+	/*//
+	var pupuset = getCommodity4AState(["Alabama"], 
+										 ["2013","2014"],
+										 ["0"],
+										 ["S","N","All"],
+									 	 "E");*/
+	
+	/*//
+	var pupuset = getCountry4AllStates(["All"], 
+										 ["2013","2014","2015","2016"], 
+										 ["S","N","All"],
+										 ["0"],
+									 	 "I");*/
+	
+	
+	/*//
+	var pupuset = getCountry4AllStates(["All"], 
+										 ["2013","2014"], 
+										 ["S","N","All"],
+										 ["0"],
+									 	 "E");*/
+	
+	/*//
+	var pupuset = getState4ACountry(["All"], 
+										 ["2013","2014","2015","2016"], 
+										 ["S","N","Taiwan"],
+										 ["0"],
+									 	 "I");*/
+	
+	
+	/*//
+	var pupuset = getState4ACountry(["All"], 
+										 ["2013","2014"], 
+										 ["S","N","Taiwan"],
+										 ["0"],
+									 	 "E");*/
+	
+	/*//
+	var pupuset = getCommodity4AllStates(["All"], 
+										 ["2013","2014","2015","2016"],
+										 ["0"],
+										 ["S","N",""],
+									 	 "I");*/
+	
+	
+	/*//
+	var pupuset = getCommodity4AllStates(["All"], 
+										 ["2013","2014"], 
+										 ["0"],
+										 ["S","N",""],
+									 	 "E");*/
+	
+	/*//
+	var pupuset = getState4ACommodity(["All"], 
+										 ["2013","2014","2015","2016"],
+										 ["0"],
+										 ["S","N","Nuclear Reactors, Boilers, Machinery and Mechanical Appliance and Parts Thereof"],
+									 	 "I");*/
+	
+	
+	/*//
+	var pupuset = getState4ACommodity(["All"], 
+										 ["2013","2014"], 
+										 ["0"],
+										 ["S","N","Nuclear Reactors, Boilers, Machinery and Mechanical Appliance and Parts Thereof"],
+									 	 "E");*/
+	
+	console.log(pupuset);
+	
+	//a bar chart
+    var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
+							11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];	
+			d3.select("body").selectAll("div")
+				.data(dataset)
+				.enter()
+				.append("div")
+				.attr("class", "bar")
+				.style("height", function(d) {
+					var barHeight = d * 5;
+					return barHeight + "px";
+				});
+	</script>
+
+</body>
+</html>
