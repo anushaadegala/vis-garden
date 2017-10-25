@@ -4,10 +4,14 @@
 <meta charset="UTF-8">
 <title>Project 2</title>
 
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="js/modernizr.custom.js"></script>
 <script src="https://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
 <script type="text/javascript" src="js/dictionary.js"></script>
 <script type="text/javascript" src="js/mapping.js"></script>
 <script type="text/javascript" src="js/function.js"></script>
+
 
 <link rel="stylesheet" href="css/style.css">
 
@@ -24,16 +28,35 @@
 
 
 <body>
+<div class="selectionPanel">
+<input type="checkbox" id="year2013" name="year2013" checked="true" onchange="loadData()">2013<br>
+<input type="checkbox" id="year2014" name="year2014" checked="true" onchange="loadData()">2014<br>
+<input type="checkbox" id="year2015" name="year2015" checked="true" onchange="loadData()">2015<br>
+<input type="checkbox" id="year2016" name="year2016" checked="true" onchange="loadData()">2016<br>
+
+<input type="radio" id= "wayExport" name="eOi" checked="true" onchange="loadData()">Export<br>
+<input type="radio" id = "wayImport" name="eOi" onchange="loadData()">Import<br>
+
+<input type="radio" id= "wayCommodity" name="cOc" checked="true" onchange="loadData()">Commodity<br>
+<input type="radio" id = "wayCountry" name="cOc" onchange="loadData()">Country<br>
+</div>
+<svg id="mapSVG" />
+<div id="tooltip" class="hidden">
+			<p><span id="valueState"></span></p>
+			<p>The amount of Imports: <span id="valueImports"></span></p>
+			<p>The amount of Exports: <span id="valueExports"></span></p>
+</div>
 
 <script type="text/javascript">
 	
-	//
-	var pupuset = getImportNExport4AState(["California"], 
+	loadData();
+	
+	/*var pupuset = getImportNExport4AState(["California"], 
 										 ["2013","2014","2015","2016"], 
 										 ["S","N","All"],
-										 ["0"]);
+										 ["0"]);*/
 	
-	
+	//console.log(pupuset);
 	
 	/*//
 	var pupuset = getImportNExport4AState(["Alabama"], 
@@ -163,10 +186,10 @@
 										 ["S","N","Nuclear Reactors, Boilers, Machinery and Mechanical Appliance and Parts Thereof"],
 									 	 "E");*/
 	
-	console.log(pupuset);
+	//console.log(pupuset);
 	
 	//a bar chart
-    var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
+    /*var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
 							11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];	
 			d3.select("body").selectAll("div")
 				.data(dataset)
@@ -176,8 +199,7 @@
 				.style("height", function(d) {
 					var barHeight = d * 5;
 					return barHeight + "px";
-				});
+				});*/
 	</script>
-
 </body>
 </html>

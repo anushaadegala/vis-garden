@@ -2,7 +2,7 @@
 
 var width = 1000;
     var height = 600;
-
+var pupuset = [];
 
 var projection = d3.geo.albersUsa()
     .scale(1100)
@@ -63,16 +63,18 @@ d3.json("us.json", function(unitedState) {
 						.text(fullNames[d.id]);*/
 		
 					
-				var pupuset = getImportNExport4AState([fullNames[d.id]], 
+				pupuset = getImportNExport4AState([fullNames[d.id]], 
 										 ["2013","2014","2015","2016"], 
 										 ["S","N","All"],
 										 ["0"]);
+		
+				//console.log(pupuset);
 		
 				d3.select("#tooltip")
 						.style("left", path.centroid(d)[0]+"px")
 						.style("top", path.centroid(d)[1]-100+"px")						
 						.select("#valueState")
-						.text(fullNames[d.id]+". The amount of import: "+pupuset);
+						.text(fullNames[d.id]+". The amount of import: "+pupuset[0,1]);
 		
 		
 					//Show the tooltip

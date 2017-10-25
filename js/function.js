@@ -1,3 +1,253 @@
+function loadData()
+{
+	buildMap();
+}
+
+function buildMap()
+{	
+	var width = 1000;
+		var height = 600;
+	var pupuset = [];
+
+	var projection = d3.geo.albersUsa()
+		.scale(1100)
+		.translate([width/2, height / 2]);
+
+	var path = d3.geo.path()
+		.projection(projection);
+
+	var svg = d3.select("body").append("svg")
+		.style("width", width)
+		.style("height", height);
+
+	var g = svg.append("g");
+
+	d3.json("us.json", function(unitedState) {
+	  var data = topojson.feature(unitedState, unitedState.objects.states).features;
+	  d3.tsv("us-state-names.tsv", function(tsv){
+		var names = {};
+		var fullNames= {};
+		tsv.forEach(function(d,i){
+		  names[d.id] = d.code;
+		  fullNames[d.id] = d.name;
+		});
+
+		g.append("g")
+		  .attr("class", "states-bundle")
+		  .selectAll("path")
+		  .data(data)
+		  .enter()
+		  .append("path")
+		  .attr("d", path)
+		  .attr("stroke", "white")
+		  .attr("class", "states")
+		.on("mouseover", function(d) {
+					var eachState=[];
+				  		var stateName=fullNames[d.id];
+				  
+				  		eachState=[];
+			
+				  		//[0] state name
+				  		eachState.push(stateName);
+			
+				  		//[1] the amount of import
+						//[2] the amount of export
+						var paraCommodity=$("#wayCommodity").prop('checked');
+						var paraCountry=$("#wayCountry").prop('checked');
+						if(paraCountry)
+							{
+							d3.csv("./file/country_in.csv", function(error, data){
+					  		if(error){
+						  		console.log(error);
+					  		}
+		  			  		else
+		  			  		{
+								var para2013=$("#year2013").prop('checked');
+								var para2014=$("#year2014").prop('checked');
+								var para2015=$("#year2015").prop('checked');
+								var para2016=$("#year2016").prop('checked');
+								
+						  		var data4AState = data.filter(function(d) 
+															 {
+							  		if(d["statename"] == stateName && d["rank"] == "0" && d["countryd"] == "Top 25")
+        								{ 
+            							return d;
+        								} 
+    					  		});
+
+						  	    var theAmount=0;
+						  		if(para2013)
+									{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2013;}}))}
+								if(para2014)
+									{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2014;}}))}
+								if(para2015)
+									{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2015;}}))}
+								if(para2016)
+									{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2016;}}))}
+								
+								eachState.push(theAmount.toFixed(2));
+		  			  		}
+				  		});
+						d3.csv("./file/country_ex.csv", function(error, data){
+					  		if(error){
+						  		console.log(error);
+					  		}
+		  			  		else
+		  			  		{
+								var para2013=$("#year2013").prop('checked');
+								var para2014=$("#year2014").prop('checked');
+								var para2015=$("#year2015").prop('checked');
+								var para2016=$("#year2016").prop('checked');
+								
+						  		var data4AState = data.filter(function(d) 
+															 {
+							  		if(d["statename"] == stateName && d["rank"] == "0" && d["countryd"] == "Top 25")
+        								{ 
+            							return d;
+        								} 
+
+    					  		});
+								
+								var theAmount=0;
+						  		if(para2013)
+									{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2013;}}))}
+								if(para2014)
+									{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2014;}}))}
+								if(para2015)
+									{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2015;}}))}
+								if(para2016)
+									{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2016;}}))}
+								
+								eachState.push(theAmount.toFixed(2));
+								
+								d3.select("#tooltip")
+								.style("left", path.centroid(d)[0]+"px")
+								.style("top", path.centroid(d)[1]-50+"px");
+								
+								d3.select('#valueState')
+									.text(eachState[0]);
+								d3.select('#valueImports')
+									.text(eachState[1]);
+								d3.select('#valueExports')
+									.text(eachState[2]);
+		  			  		}
+				  		});
+							}
+						else if(paraCommodity)
+							{
+						    d3.csv("./file/commodity_in.csv", function(error, data){
+					  		if(error){
+						  		console.log(error);
+					  		}
+		  			  		else
+		  			  		{
+								var para2013=$("#year2013").prop('checked');
+								var para2014=$("#year2014").prop('checked');
+								var para2015=$("#year2015").prop('checked');
+								var para2016=$("#year2016").prop('checked');
+								
+						  		var data4AState = data.filter(function(d) 
+															 {
+							  		if(d["statename"] == stateName && d["rank"] == "0" && d["hs6"] == "25")
+        								{ 
+            							return d;
+        								} 
+
+    					  		});
+								
+						  	    var theAmount=0;
+						  		if(para2013)
+									{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2013;}}))}
+								if(para2014)
+									{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2014;}}))}
+								if(para2015)
+									{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2015;}}))}
+								if(para2016)
+									{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2016;}}))}
+								eachState.push(theAmount.toFixed(2));
+		  			  		}
+				  		});
+						d3.csv("./file/commodity_ex.csv", function(error, data){
+					  		if(error){
+						  		console.log(error);
+					  		}
+		  			  		else
+		  			  		{
+								var para2013=$("#year2013").prop('checked');
+								var para2014=$("#year2014").prop('checked');
+								var para2015=$("#year2015").prop('checked');
+								var para2016=$("#year2016").prop('checked');
+								
+						  		var data4AState = data.filter(function(d) 
+															 {
+							  		if(d["statename"] == stateName && d["rank"] == "0" && d["hs6"] == "25")
+        								{ 
+            							return d;
+        								} 
+
+    					  		});
+								
+						  	    var theAmount=0;
+						  		if(para2013)
+									{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2013;}}))}
+								if(para2014)
+									{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2014;}}))}
+								if(para2015)
+									{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2015;}}))}
+								if(para2016)
+									{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2016;}}))}
+								eachState.push(theAmount.toFixed(2));
+								
+								d3.select("#tooltip")
+								.style("left", path.centroid(d)[0]+"px")
+								.style("top", path.centroid(d)[1]-50+"px");
+								
+								d3.select('#valueState')
+									.text(eachState[0]);
+								d3.select('#valueImports')
+									.text(eachState[1]);
+								d3.select('#valueExports')
+									.text(eachState[2]);
+		  			  		}
+				  		});
+							}
+						else
+						{
+							console.log("This is a parameter issue. (at buildMap())");
+						}
+	
+						//Show the tooltip
+						d3.select("#tooltip").classed("hidden", false);
+
+				   })
+				   .on("mouseout", function() {
+
+						//Hide the tooltip
+						d3.select("#tooltip").classed("hidden", true);
+				   });
+
+			 g.append("g")
+			  .attr("class", "states-names")
+			  .selectAll("text")
+			  .data(data)
+			  .enter()
+			  .append("svg:text")
+			  .text(function(d){
+				return names[d.id];
+			  })
+			  .attr("x", function(d){
+				  return path.centroid(d)[0];
+			  })
+			  .attr("y", function(d){
+				  return  path.centroid(d)[1];
+			  })
+			  .attr("text-anchor","middle")
+			  .attr('fill', 'green');
+
+	  });
+	});				
+}
+
 //6.2.1 getImportNExport4AState
 function getImportNExport4AState(states, years, countries, commodities)
 {
@@ -17,6 +267,7 @@ function getImportNExport4AState(states, years, countries, commodities)
 				  		//[0] state name
 				  		eachState.push(stateName);
 				  		//[1] the amount of import
+						
 				  		d3.csv("./file/country_in.csv", function(error, data){
 					  		if(error){
 						  		console.log(error);
@@ -50,7 +301,7 @@ function getImportNExport4AState(states, years, countries, commodities)
 								eachState.push(theAmount.toFixed(2));
 		  			  		}
 				  		});
-				  
+				  			//console.log(eachState);
 							//[2] the amount of export
 						d3.csv("./file/country_ex.csv", function(error, data){
 					  		if(error){
@@ -85,6 +336,7 @@ function getImportNExport4AState(states, years, countries, commodities)
 								eachState.push(theAmount.toFixed(2));
 		  			  		}
 				  		});
+						//console.log("eachState:" + eachState);
 						returnInformation.push(eachState);
 			  		}
 					//console.log("the result:" + returnInformation);
@@ -170,7 +422,9 @@ function getImportNExport4AState(states, years, countries, commodities)
 								eachState.push(theAmount.toFixed(2));
 		  			  		}
 				  		});
+						
 						returnInformation.push(eachState);
+						
 			  		}
 					//console.log("the result:" + returnInformation);
 				}
@@ -184,6 +438,8 @@ function getImportNExport4AState(states, years, countries, commodities)
 				{
 			
 				}
+	//console.log("here");
+	//console.log(returnInformation);
 	return returnInformation;
 }
 
