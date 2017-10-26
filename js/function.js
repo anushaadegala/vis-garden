@@ -16,9 +16,12 @@ function buildMap()
 	var path = d3.geo.path()
 		.projection(projection);
 
-	var svg = d3.select("body").append("svg")
+	/*var svg = d3.select("body").append("svg")
 		.style("width", width)
-		.style("height", height);
+		.style("height", height);*/
+	var svg = d3.select("#mapSVG")
+			  .attr("width", width)
+			  .attr("height", height);
 
 	var g = svg.append("g");
 
