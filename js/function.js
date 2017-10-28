@@ -1,16 +1,148 @@
 function loadData()
 {
 	buildMap();
+	buildMapPie();
+	buildBar();
+	buildBarPie();
+	buildBarLine();
+}
+
+function buildBarLine()
+{
+			var w = 250;
+			var h = 100;
+			var barPadding = 1;
+			
+			var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
+							11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
+	
+			  var svg4barSVG = d3.select("#barLineSVG")
+			                    .attr("width", w)
+								.attr("height", h);
+			  
+			  svg4barSVG.selectAll("rect")
+			   .data(dataset)
+			   .enter()
+			   .append("rect")
+			   .attr("x", function(d, i) {
+			   		return i * (w / dataset.length);
+			   })
+			   .attr("y", function(d) {
+			   		return h - (d * 4);
+			   })
+			   .attr("width", w / dataset.length - barPadding)
+			   .attr("height", function(d) {
+			   		return d * 4;
+			   })
+			   .attr("fill", function(d) {
+					return "rgb(0, 0, " + (d * 10) + ")";
+			   });
+}
+
+function buildBarPie()
+{
+			var w = 250;
+			var h = 100;
+			var barPadding = 1;
+			
+			var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
+							11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
+	
+			  var svg4barSVG = d3.select("#barPieSVG")
+			                    .attr("width", w)
+								.attr("height", h);
+			  
+			  svg4barSVG.selectAll("rect")
+			   .data(dataset)
+			   .enter()
+			   .append("rect")
+			   .attr("x", function(d, i) {
+			   		return i * (w / dataset.length);
+			   })
+			   .attr("y", function(d) {
+			   		return h - (d * 4);
+			   })
+			   .attr("width", w / dataset.length - barPadding)
+			   .attr("height", function(d) {
+			   		return d * 4;
+			   })
+			   .attr("fill", function(d) {
+					return "rgb(0, 0, " + (d * 10) + ")";
+			   });
+}
+
+function buildBar()
+{
+			var w = 500;
+			var h = 100;
+			var barPadding = 1;
+			
+			var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
+							11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
+	
+			  var svg4barSVG = d3.select("#barSVG")
+			                    .attr("width", w)
+								.attr("height", h);
+			  
+			  svg4barSVG.selectAll("rect")
+			   .data(dataset)
+			   .enter()
+			   .append("rect")
+			   .attr("x", function(d, i) {
+			   		return i * (w / dataset.length);
+			   })
+			   .attr("y", function(d) {
+			   		return h - (d * 4);
+			   })
+			   .attr("width", w / dataset.length - barPadding)
+			   .attr("height", function(d) {
+			   		return d * 4;
+			   })
+			   .attr("fill", function(d) {
+					return "rgb(0, 0, " + (d * 10) + ")";
+			   });		
+}
+
+function buildMapPie()
+{
+			var w = 500;
+			var h = 100;
+			var barPadding = 1;
+			
+			var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
+							11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
+	
+			  var svg4barSVG = d3.select("#mapPieSVG")
+			                    .attr("width", w)
+								.attr("height", h);
+			  
+			  svg4barSVG.selectAll("rect")
+			   .data(dataset)
+			   .enter()
+			   .append("rect")
+			   .attr("x", function(d, i) {
+			   		return i * (w / dataset.length);
+			   })
+			   .attr("y", function(d) {
+			   		return h - (d * 4);
+			   })
+			   .attr("width", w / dataset.length - barPadding)
+			   .attr("height", function(d) {
+			   		return d * 4;
+			   })
+			   .attr("fill", function(d) {
+					return "rgb(0, 0, " + (d * 10) + ")";
+			   });
 }
 
 function buildMap()
 {	
 	var width = 1000;
-		var height = 600;
+	var height = 600;
 	var pupuset = [];
 
 	var projection = d3.geo.albersUsa()
-		.scale(1100)
+		.scale(1000)
 		.translate([width/2, height / 2]);
 
 	var path = d3.geo.path()
