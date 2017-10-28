@@ -1,10 +1,51 @@
 body{
 	background-color: #fff;
+	width: 100%;
 }
 
-.selectionPanel
-{
-	float: left;
+#selectionPanel{
+	width: 100%;
+	height: 50px;
+    display: inline-block;
+}
+
+#mapPanel{
+	width: 60%;
+	height: 400px;
+	position: absolute;
+	top: -20px;
+	left: -100px;
+}
+
+#mapPiePanel{
+	width: 40%;
+	height: 400px;
+	position: absolute;
+	top: 150px;
+	left: 800px;
+}
+
+#barPanel{
+	width: 40%;
+	height: 300px;
+	position: absolute;
+	top: 600px;
+}
+
+#barPiePanel{
+	width: 30%;
+	height: 300px;
+	position: absolute;
+	top: 600px;
+	left: 600px;
+}
+
+#barLinePanel{
+	width: 30%;
+	height: 300px;
+	position: absolute;
+	top: 600px;
+	left: 900px;
 }
 
 div.bar {
