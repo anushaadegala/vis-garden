@@ -8,6 +8,14 @@ body{
 	display: inline-block;
 	background-color: #ecf0f1;
 	padding-left: 1%;
+	float: left;
+}
+
+.gameIcon
+{
+	display: inline-block;
+	padding-left: 1%;
+	cursor: pointer;
 }
 
 #selectionEoI
@@ -15,6 +23,7 @@ body{
 	display: inline-block;
 	background-color: #ecf0f1;
 	padding-left: 1%;
+	float: left;
 }
 
 #selectionCoC
@@ -22,6 +31,7 @@ body{
 	display: inline-block;
 	background-color: #ecf0f1;
 	padding-left: 1%;
+	float: left;
 }
 
 #selectionFoS
@@ -29,6 +39,7 @@ body{
 	display: inline-block;
 	background-color: #ecf0f1;
 	padding-left: 1%;
+	float: left;
 }
 	
 #selectionPanel{
@@ -167,3 +178,51 @@ div.tooltip {
 				font-size: 16px;
 				line-height: 20px;
 			}
+.showClickFinger
+{
+	cursor: pointer;
+}
+
+div[id^="questionalPanel"] {
+    width: 55%;
+	display: inline-block;
+	padding: 1%;
+	float: left;
+}
+
+div[id^="answerlPanel"] {
+    width: 35%;
+	display: inline-block;
+	padding: 1%;
+}
+
+div[id^="leftAtQuestion"] {
+    width: 75%;
+	display: inline-block;
+	padding: 1%;
+}
+
+div[id^="rightAtQuestion"] {
+    width: 15%;
+	display: inline-block;
+	padding: 1%;
+}
+
+.w3-button {
+	width: 100%;
+}
+
+.marginTop290 {
+	margin-top: 290%;
+}
+
+div[id^="panel_"] {
+    width: 100%;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+.imageSize{
+	width: 90%;
+}

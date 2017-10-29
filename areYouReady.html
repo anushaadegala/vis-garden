@@ -1,0 +1,186 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Game Zone</title>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="js/modernizr.custom.js"></script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script type="text/javascript" src="js/dictionary.js"></script>
+<script type="text/javascript" src="js/mapping.js"></script>
+<script type="text/javascript" src="js/function.js"></script>
+
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<!-- for FF, Chrome, Opera -->
+<link rel="icon" type="image/png" href="image/icon/favicon-small.png" sizes="16x16" />
+<link rel="icon" type="image/png" href="image/icon/favicon-large.png" sizes="32x32" />
+
+<!-- for IE -->
+<link rel="icon" type="image/x-icon" href="image/icon/favicon.ico" />
+<link rel="shortcut icon" type="image/x-icon" href="image/icon/favicon.ico" />
+</head>
+
+<body>
+
+<!--
+<img src="image/icon/sound.png" onclick="playIt('file/test.mp3')" draggable="false" class="showClickFinger" />
+-->
+
+<div id="panel_1">
+	<div id="questionalPanel_1">
+		<div id="leftAtQuestion_1">
+			<img src="image/icon/sound.png" onclick="playIt('file/q1.mp3')" draggable="false" class="showClickFinger" />
+			<p><span id="question_1">Who are you?</span></p>
+			<p><button class="w3-button w3-light-grey" onclick="go4();">A poor H517 student.</button></p>
+			<p><button class="w3-button w3-light-grey" onclick="go2();">An evail H517 teacher.</button></p>
+		</div>
+		<div id="rightAtQuestion_1">
+			<!--<img src="image/icon/sound.png" onclick="playIt('file/test.mp3')" draggable="false" class="showClickFinger" />-->
+		</div>
+	</div>
+	<div id="answerlPanel_1" />
+</div>
+
+<div id="panel_2">
+	<div id="questionalPanel_2">
+		<div id="leftAtQuestion_2">
+			<img src="image/icon/sound.png" onclick="playIt('file/q2.mp3')" draggable="false" class="showClickFinger" />
+			<p><span id="question_2">I think I am pretty bad because I set a deadline of this project on Halloween and let my students cannot go to a party ON PURPOSE.</span></p>
+			<p><button class="w3-button w3-light-grey">I do not think so.</button></p>
+			<p><button class="w3-button w3-light-grey" onclick="go3();">Yes. I promise I will be nicer from now on.</button></p>
+		</div>
+		<div id="rightAtQuestion_2">
+			<!--<img src="image/icon/sound.png" onclick="playIt('file/test.mp3')" draggable="false" class="showClickFinger" />-->
+		</div>
+	</div>
+	<div id="answerlPanel_2" />
+</div>
+
+<div id="panel_3">
+	<div id="questionalPanel_3">
+		<div id="leftAtQuestion_3">
+			<img src="image/icon/sound.png" onclick="playIt('file/q3.mp3')" draggable="false" class="showClickFinger" />
+			<p><span id="question_3">OK! We believe you. Let us play a game.</span></p>
+			<p><button class="w3-button w3-light-grey" onclick="go5();">Go.</button></p>
+		</div>
+		<div id="rightAtQuestion_3">
+			<!--<img src="image/icon/sound.png" onclick="playIt('file/test.mp3')" draggable="false" class="showClickFinger" />-->
+		</div>
+	</div>
+	<div id="answerlPanel_3" />
+</div>
+
+<div id="panel_4">
+	<div id="questionalPanel_4">
+		<div id="leftAtQuestion_4">
+			<img src="image/icon/sound.png" onclick="playIt('file/q4.mp3')" draggable="false" class="showClickFinger" />
+			<p><span id="question_4">Cheer up! Let us play a game.</span></p>
+			<p><button class="w3-button w3-light-grey" onclick="go5();">Go.</button></p>
+		</div>
+		<div id="rightAtQuestion_4">
+			<!--<img src="image/icon/sound.png" onclick="playIt('file/test.mp3')" draggable="false" class="showClickFinger" />-->
+		</div>
+	</div>
+	<div id="answerlPanel_4" />
+</div>
+
+<div id="panel_5">
+	<div id="questionalPanel_5">
+		<div id="leftAtQuestion_5">
+			<img src="image/icon/sound.png" onclick="playIt('file/q5.mp3')" draggable="false" class="showClickFinger" />
+			<p><span id="question_5">Which state you guess is the most popular trading partner with Taiwan from 2013 to 2016?</span></p>
+			<!--<p><button class="w3-button w3-light-grey" onclick="showWrongP_5();">Indiana.</button></p>
+			<p><button class="w3-button w3-light-grey" onclick="showRightP_5();">California.</button></p>-->
+			<svg id="map1SVG" />
+		</div>
+		<div id="rightAtQuestion_5">
+			<!--<img src="image/icon/sound.png" onclick="playIt('file/test.mp3')" draggable="false" class="showClickFinger" />-->
+			<p><button onClick="go6();" class="w3-button w3-teal marginTop290">Next</button></p>
+		</div>
+	</div>
+	<div id="answerlPanel_5">
+		<div id="imgRight_5" class="hidden">
+			<img src="image/icon/right.png" draggable="false" class="imageSize" />
+		</div>
+		<div id="imgWrong_5" class="hidden">
+			<img src="image/icon/wrong.png" draggable="false" class="imageSize" />
+		</div>
+		<p><span id="description_5"></span></p>
+	</div>
+</div>
+
+<div id="panel_6">
+	<div id="questionalPanel_6">
+		<div id="leftAtQuestion_6">
+			<img src="image/icon/sound.png" onclick="playIt('file/q6.mp3')" draggable="false" class="showClickFinger" />
+			<p><span id="question_6">Which state you guess has the cruelest class H517 happening in a really cold winter?</span></p>
+			<!--<p><button class="w3-button w3-light-grey" onclick="showRightP_6();">Indiana.</button></p>
+			<p><button class="w3-button w3-light-grey" onclick="showWrongP_6();">California.</button></p>-->
+			<svg id="map2SVG" />
+		</div>
+		<div id="rightAtQuestion_6">
+			<!--<img src="image/icon/sound.png" onclick="playIt('file/test.mp3')" draggable="false" class="showClickFinger" />-->
+			<p><button onClick="go7();" class="w3-button w3-teal marginTop290">Next</button></p>
+		</div>
+	</div>
+	<div id="answerlPanel_6">
+		<div id="imgRight_6" class="hidden">
+			<img src="image/icon/right.png" draggable="false" class="imageSize" />
+		</div>
+		<div id="imgWrong_6" class="hidden">
+			<img src="image/icon/wrong.png" draggable="false" class="imageSize" />
+		</div>
+		<p><span id="description_6"></span></p>
+	</div>
+</div>
+
+<div id="panel_7">
+	<div id="questionalPanel_7">
+		<div id="leftAtQuestion_7">
+			<img src="image/icon/sound.png" onclick="playIt('file/q7.mp3')" draggable="false" class="showClickFinger" />
+			<p><span id="question_7">Which country you guess is the most popular trading partner with Indiana from 2013 to 2016?</span></p>
+			<p><button class="w3-button w3-light-grey" onclick="showWrongP_7();">China.</button></p>
+			<p><button class="w3-button w3-light-grey" onclick="showRightP_7();">Canada.</button></p>
+		</div>
+		<div id="rightAtQuestion_7">
+			<!--<img src="image/icon/sound.png" onclick="playIt('file/test.mp3')" draggable="false" class="showClickFinger" />-->
+			<p><button onClick="go8();" class="w3-button w3-teal marginTop290">Next</button></p>
+		</div>
+	</div>
+	<div id="answerlPanel_7">
+		<div id="imgRight_7" class="hidden">
+			<img src="image/icon/right.png" draggable="false" class="imageSize" />
+		</div>
+		<div id="imgWrong_7" class="hidden">
+			<img src="image/icon/wrong.png" draggable="false" class="imageSize" />
+		</div>
+		<p><span id="description_7"></span></p>
+	</div>
+</div>
+
+<div id="panel_8">
+	<div id="questionalPanel_8">
+		<div id="leftAtQuestion_8">
+			<p><span id="question_8"></span></p>
+			<p><button class="w3-button w3-light-grey" onclick="location.href='playground.html';">Go back to the educational page.</button></p>
+		</div>
+		<div id="rightAtQuestion_8">
+			<!--<img src="image/icon/sound.png" onclick="playIt('file/test.mp3')" draggable="false" class="showClickFinger" />-->
+		</div>
+	</div>
+	<div id="answerlPanel_8">
+		<p><span id="description_8"></span></p>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	go1();
+</script>
+
+</body>
+</html>
