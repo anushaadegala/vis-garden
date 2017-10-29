@@ -1,3 +1,7 @@
+var score5=0;
+var score6=0;
+var score7=0;
+
 function loadData()
 {
 	buildMap();
@@ -1328,12 +1332,6 @@ function buildMap()
 
 	  });
 	});				
-}
-
-
-function clicklegend(d) {
-  legend[0][selectedColor].style.stroke = null;
-  legend[0][selectedColor = d].style.stroke = "#000";
 }
 
 function get16Characters(originalString)
@@ -3147,5 +3145,313 @@ function getState4ACommodity(states, years, countries, commodities, IE)
 		  }
 });*/
 
+function build1Map()
+{
+	var width = 500;
+	var height = 300;
+	var pupuset = [];
 
-	   
+	var projection = d3.geo.albersUsa()
+		.scale(600)
+		.translate([width/2, height / 2]);
+
+	var path = d3.geo.path()
+		.projection(projection);
+
+	/*var svg = d3.select("body").append("svg")
+		.style("width", width)
+		.style("height", height);*/
+	var svg = d3.select("#map1SVG")
+			  .attr("width", width)
+			  .attr("height", height);
+
+	var g = svg.append("g");
+
+	d3.json("us.json", function(unitedState) {
+	  var data = topojson.feature(unitedState, unitedState.objects.states).features;
+	  d3.tsv("us-state-names.tsv", function(tsv){
+		var names = {};
+		var fullNames= {};
+		tsv.forEach(function(d,i){
+		  names[d.id] = d.code;
+		  fullNames[d.id] = d.name;
+		});
+
+		g.append("g")
+		  .attr("class", "states-bundle")
+		  .selectAll("path")
+		  .data(data)
+		  .enter()
+		  .append("path")
+		  .attr("d", path)
+		  .attr("stroke", "white")
+		  .attr("class", "states")
+		  .on("click", function(d){
+		      buildMapPie(fullNames[d.id]);
+			  d3.select("#mapState").classed("hidden", false);
+			  $('#mapState').html(fullNames[d.id]).show();
+		  })
+		  .on("click", function(d) {
+					if(fullNames[d.id]=="California")
+						{showRightP_5();}
+					else
+						{showWrongP_5();}
+			
+				   });
+
+			 g.append("g")
+			  .attr("class", "states-names")
+			  .selectAll("text")
+			  .data(data)
+			  .enter()
+			  .append("svg:text")
+			  .text(function(d){
+				return names[d.id];
+			  })
+			  .attr("x", function(d){
+				  return path.centroid(d)[0];
+			  })
+			  .attr("y", function(d){
+				  return  path.centroid(d)[1];
+			  })
+			  .attr("text-anchor","middle")
+			  .attr('fill', 'green');
+
+	  });
+	});
+}
+
+function build2Map()
+{
+	var width = 500;
+	var height = 300;
+	var pupuset = [];
+
+	var projection = d3.geo.albersUsa()
+		.scale(600)
+		.translate([width/2, height / 2]);
+
+	var path = d3.geo.path()
+		.projection(projection);
+
+	/*var svg = d3.select("body").append("svg")
+		.style("width", width)
+		.style("height", height);*/
+	var svg = d3.select("#map2SVG")
+			  .attr("width", width)
+			  .attr("height", height);
+
+	var g = svg.append("g");
+
+	d3.json("us.json", function(unitedState) {
+	  var data = topojson.feature(unitedState, unitedState.objects.states).features;
+	  d3.tsv("us-state-names.tsv", function(tsv){
+		var names = {};
+		var fullNames= {};
+		tsv.forEach(function(d,i){
+		  names[d.id] = d.code;
+		  fullNames[d.id] = d.name;
+		});
+
+		g.append("g")
+		  .attr("class", "states-bundle")
+		  .selectAll("path")
+		  .data(data)
+		  .enter()
+		  .append("path")
+		  .attr("d", path)
+		  .attr("stroke", "white")
+		  .attr("class", "states")
+		  .on("click", function(d){
+		      buildMapPie(fullNames[d.id]);
+			  d3.select("#mapState").classed("hidden", false);
+			  $('#mapState').html(fullNames[d.id]).show();
+		  })
+		  .on("click", function(d) {
+					if(fullNames[d.id]=="Indiana")
+						{showRightP_6();}
+					else
+						{showWrongP_6();}
+			
+				   });
+
+			 g.append("g")
+			  .attr("class", "states-names")
+			  .selectAll("text")
+			  .data(data)
+			  .enter()
+			  .append("svg:text")
+			  .text(function(d){
+				return names[d.id];
+			  })
+			  .attr("x", function(d){
+				  return path.centroid(d)[0];
+			  })
+			  .attr("y", function(d){
+				  return  path.centroid(d)[1];
+			  })
+			  .attr("text-anchor","middle")
+			  .attr('fill', 'green');
+
+	  });
+	});
+}
+
+function playIt(file)
+	{
+		var audio = new Audio(file);
+		audio.play();
+	}
+
+function go1()
+{
+	$("#panel_1").css("visibility", "visible");
+	$("#panel_2").css("visibility", "hidden");
+	$("#panel_3").css("visibility", "hidden");
+	$("#panel_4").css("visibility", "hidden");
+	$("#panel_5").css("visibility", "hidden");
+	$("#panel_6").css("visibility", "hidden");
+	$("#panel_7").css("visibility", "hidden");
+	$("#panel_8").css("visibility", "hidden");
+	
+	build1Map();
+	build2Map();
+}
+
+function go2()
+{
+	$("#panel_1").css("visibility", "hidden");
+	$("#panel_2").css("visibility", "visible");
+	$("#panel_3").css("visibility", "hidden");
+	$("#panel_4").css("visibility", "hidden");
+	$("#panel_5").css("visibility", "hidden");
+	$("#panel_6").css("visibility", "hidden");
+	$("#panel_7").css("visibility", "hidden");
+	$("#panel_8").css("visibility", "hidden");
+}
+
+function go3()
+{
+	$("#panel_1").css("visibility", "hidden");
+	$("#panel_2").css("visibility", "hidden");
+	$("#panel_3").css("visibility", "visible");
+	$("#panel_4").css("visibility", "hidden");
+	$("#panel_6").css("visibility", "hidden");
+	$("#panel_7").css("visibility", "hidden");
+	$("#panel_8").css("visibility", "hidden");
+}
+
+function go4()
+{
+	$("#panel_1").css("visibility", "hidden");
+	$("#panel_2").css("visibility", "hidden");
+	$("#panel_3").css("visibility", "hidden");
+	$("#panel_4").css("visibility", "visible");
+	$("#panel_5").css("visibility", "hidden");
+	$("#panel_6").css("visibility", "hidden");
+	$("#panel_7").css("visibility", "hidden");
+	$("#panel_8").css("visibility", "hidden");
+}
+
+function go5()
+{
+	$("#panel_1").css("visibility", "hidden");
+	$("#panel_2").css("visibility", "hidden");
+	$("#panel_3").css("visibility", "hidden");
+	$("#panel_4").css("visibility", "hidden");
+	$("#panel_5").css("visibility", "visible");
+	$("#panel_6").css("visibility", "hidden");
+	$("#panel_7").css("visibility", "hidden");
+	$("#panel_8").css("visibility", "hidden");
+}
+
+function go6()
+{
+	$("#panel_1").css("visibility", "hidden");
+	$("#panel_2").css("visibility", "hidden");
+	$("#panel_3").css("visibility", "hidden");
+	$("#panel_4").css("visibility", "hidden");
+	$("#panel_5").css("visibility", "hidden");
+	$("#panel_6").css("visibility", "visible");
+	$("#panel_7").css("visibility", "hidden");
+	$("#panel_8").css("visibility", "hidden");
+}
+
+function go7()
+{
+	$("#panel_1").css("visibility", "hidden");
+	$("#panel_2").css("visibility", "hidden");
+	$("#panel_3").css("visibility", "hidden");
+	$("#panel_4").css("visibility", "hidden");
+	$("#panel_5").css("visibility", "hidden");
+	$("#panel_6").css("visibility", "hidden");
+	$("#panel_7").css("visibility", "visible");
+	$("#panel_8").css("visibility", "hidden");
+}
+
+function go8()
+{
+	$("#panel_1").css("visibility", "hidden");
+	$("#panel_2").css("visibility", "hidden");
+	$("#panel_3").css("visibility", "hidden");
+	$("#panel_4").css("visibility", "hidden");
+	$("#panel_5").css("visibility", "hidden");
+	$("#panel_6").css("visibility", "hidden");
+	$("#panel_7").css("visibility", "hidden");
+	$("#panel_8").css("visibility", "visible");
+	
+	var score=0;
+	score=score5+score6+score7;
+	if(score==3) {$("#question_8").text("Your score is: A+ (Nice job! Very Impressed!)");}
+	else if (score==2) {$("#question_8").text("Your score is: A (Try it next time. You will be better.)");}
+	else if (score==1) {$("#question_8").text("Your score is: A- (Try it next time. You will be better.)");}
+	else if (score==0) {$("#question_8").text("Your score is: B (Try it next time. You will be better.)");}
+}
+
+function showWrongP_5()
+{
+	score5=0;
+	$("#imgWrong_5").css("display", "block");
+	$("#imgRight_5").css("display", "none");
+	$("#description_5").html("Through 2013 to 2016, <strong>California</strong> is the most popular trading partner with Taiwan and the amount is <strong>77,550.17</strong>, including 47,851.85 for imports and 29,695.32 between California and Taiwan.").show();
+}
+
+function showRightP_5()
+{
+	score5=1;
+	$("#imgRight_5").css("display", "block");
+	$("#imgWrong_5").css("display", "none");
+	$("#description_5").html("Through 2013 to 2016, <strong>California</strong> is the most popular trading partner with Taiwan and the amount is <strong>77,550.17</strong>, including 47,851.85 for imports and 29,695.32 between California and Taiwan.").show();
+}
+	
+function showWrongP_6()
+{
+	score6=0;
+	$("#imgWrong_6").css("display", "block");
+	$("#imgRight_6").css("display", "none");
+	$("#description_6").html("Tell me about that!").show();
+}
+
+function showRightP_6()
+{
+	score6=1;
+	$("#imgRight_6").css("display", "block");
+	$("#imgWrong_6").css("display", "none");
+	$("#description_6").html("Tell me about that!").show();
+}
+
+function showWrongP_7()
+{
+	score7=0;
+	$("#imgWrong_7").css("display", "block");
+	$("#imgRight_7").css("display", "none");
+	$("#description_7").html("The amount of imports and exports is <strong>2,316,877.09</strong> between <strong>Canada</strong> and U.S.A..; The amount of imports and exports is <strong>2,309,795.77</strong> between <strong>China</strong> and U.S.A..").show();
+}
+
+function showRightP_7()
+{
+	score7=1;
+	$("#imgRight_7").css("display", "block");
+	$("#imgWrong_7").css("display", "none");
+	$("#description_7").html("The amount of imports and exports is <strong>2,316,877.09</strong> between <strong>Canada</strong> and U.S.A..; The amount of imports and exports is <strong>2,309,795.77</strong> between <strong>China</strong> and U.S.A..").show();
+}
