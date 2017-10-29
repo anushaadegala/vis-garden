@@ -2,7 +2,8 @@ function loadData()
 {
 	buildMap();
 	//buildMapPie();
-	d3.select("#mapPieSVG").classed("hidden", true);
+	d3.select(".mapPieSVG").classed("hidden", true);
+	d3.select("#mapPieTip").classed("hidden", true);
 	buildBar();
 	buildBarPie();
 	buildBarLine();
@@ -210,11 +211,19 @@ function buildMapPie(stateName)
 										.enter()                            
 										.append("svg:g")                
 										.attr("class", "slice");   
-
+     
 										arcs.append("svg:path")
 											.attr("fill", function(d, i) { return color(i); } ) 
-											.attr("d", arc);                                    
-
+											.attr("d", arc)
+										    .on("mouseover", function(d, i) {
+											d3.select("#mapPieSVG").classed("hidden", false);
+											d3.select("#mapPieTip").classed("hidden", false);
+											$('#mapPielValue').html(returnInformation[i].label).show();
+										})
+											.on("mouseout", function() {
+											d3.select("#mapPieTip").classed("hidden", true);
+				   							});
+										
 										arcs.append("svg:text")                                     
 												.attr("transform", function(d) {                    
 												d.innerRadius = 0;
@@ -222,7 +231,7 @@ function buildMapPie(stateName)
 												return "translate(" + arc.centroid(d) + ")";       
 											})
 											.attr("text-anchor", "middle")                         
-											.text(function(d, i) { return returnInformation[i].label; });
+											.text(function(d, i) { return get16Characters(returnInformation[i].label); });
 									}
 								else if (paraSecondLayer)
 									{
@@ -289,13 +298,18 @@ function buildMapPie(stateName)
 										.enter()                            
 										.append("svg:g")                
 										.attr("class", "slice");   
-
-										/*arcs.append("svg:path")
-											.attr("fill", function(d, i) { return color(i); } ) 
-											.attr("d", arc);*/   
+  
 										arcs.append("svg:path")
 											.attr("fill", function(d, i) { return color(i); } ) 
-											.attr("d", arc);
+											.attr("d", arc)
+											.on("mouseover", function(d, i) {
+											d3.select("#mapPieSVG").classed("hidden", false);
+											d3.select("#mapPieTip").classed("hidden", false);
+											$('#mapPielValue').html(returnInformationSecond[i].label).show();
+										})
+											.on("mouseout", function() {
+											d3.select("#mapPieTip").classed("hidden", true);
+				   							});
 											
 
 										arcs.append("svg:text")                                     
@@ -305,7 +319,7 @@ function buildMapPie(stateName)
 												return "translate(" + arc.centroid(d) + ")";       
 											})
 											.attr("text-anchor", "middle")                         
-											.text(function(d, i) { return returnInformationSecond[i].label; });
+											.text(function(d, i) { return get16Characters(returnInformationSecond[i].label); });
 									}
 								else 
 									{console.log("no value from firstLayer or secondLayer. (at buildMapPie())");}
@@ -408,7 +422,15 @@ function buildMapPie(stateName)
 
 										arcs.append("svg:path")
 											.attr("fill", function(d, i) { return color(i); } ) 
-											.attr("d", arc);                                    
+											.attr("d", arc)
+											.on("mouseover", function(d, i) {
+											d3.select("#mapPieSVG").classed("hidden", false);
+											d3.select("#mapPieTip").classed("hidden", false);
+											$('#mapPielValue').html(returnInformation[i].label).show();
+										})
+											.on("mouseout", function() {
+											d3.select("#mapPieTip").classed("hidden", true);
+				   							});                                    
 
 										arcs.append("svg:text")                                     
 												.attr("transform", function(d) {                    
@@ -417,7 +439,7 @@ function buildMapPie(stateName)
 												return "translate(" + arc.centroid(d) + ")";       
 											})
 											.attr("text-anchor", "middle")                         
-											.text(function(d, i) { return returnInformation[i].label; });
+											.text(function(d, i) { return get16Characters(returnInformation[i].label); });
 									}
 								else if (paraSecondLayer)
 									{
@@ -490,7 +512,15 @@ function buildMapPie(stateName)
 											.attr("d", arc);*/   
 										arcs.append("svg:path")
 											.attr("fill", function(d, i) { return color(i); } ) 
-											.attr("d", arc);
+											.attr("d", arc)
+											.on("mouseover", function(d, i) {
+											d3.select("#mapPieSVG").classed("hidden", false);
+											d3.select("#mapPieTip").classed("hidden", false);
+											$('#mapPielValue').html(returnInformationSecond[i].label).show();
+										})
+											.on("mouseout", function() {
+											d3.select("#mapPieTip").classed("hidden", true);
+				   							});
 											
 
 										arcs.append("svg:text")                                     
@@ -500,7 +530,7 @@ function buildMapPie(stateName)
 												return "translate(" + arc.centroid(d) + ")";       
 											})
 											.attr("text-anchor", "middle")                         
-											.text(function(d, i) { return returnInformationSecond[i].label; });
+											.text(function(d, i) { return get16Characters(returnInformationSecond[i].label); });
 									}
 								else 
 									{console.log("no value from firstLayer or secondLayer. (at buildMapPie())");}
@@ -609,7 +639,15 @@ function buildMapPie(stateName)
 
 										arcs.append("svg:path")
 											.attr("fill", function(d, i) { return color(i); } ) 
-											.attr("d", arc);                                    
+											.attr("d", arc)
+											.on("mouseover", function(d, i) {
+											d3.select("#mapPieSVG").classed("hidden", false);
+											d3.select("#mapPieTip").classed("hidden", false);
+											$('#mapPielValue').html(returnInformation[i].label).show();
+										})
+											.on("mouseout", function() {
+											d3.select("#mapPieTip").classed("hidden", true);
+				   							});                                    
 
 										arcs.append("svg:text")                                     
 												.attr("transform", function(d) {                    
@@ -618,7 +656,7 @@ function buildMapPie(stateName)
 												return "translate(" + arc.centroid(d) + ")";       
 											})
 											.attr("text-anchor", "middle")                         
-											.text(function(d, i) { return returnInformation[i].label; });
+											.text(function(d, i) { return get16Characters(returnInformation[i].label); });
 									}
 								else if (paraSecondLayer)
 									{
@@ -724,7 +762,15 @@ function buildMapPie(stateName)
 											.attr("d", arc);*/   
 										arcs.append("svg:path")
 											.attr("fill", function(d, i) { return color(i); } ) 
-											.attr("d", arc);
+											.attr("d", arc)
+											.on("mouseover", function(d, i) {
+											d3.select("#mapPieSVG").classed("hidden", false);
+											d3.select("#mapPieTip").classed("hidden", false);
+											$('#mapPielValue').html(returnInformationSecond[i].label).show();
+										})
+											.on("mouseout", function() {
+											d3.select("#mapPieTip").classed("hidden", true);
+				   							});
 											
 
 										arcs.append("svg:text")                                     
@@ -734,7 +780,7 @@ function buildMapPie(stateName)
 												return "translate(" + arc.centroid(d) + ")";       
 											})
 											.attr("text-anchor", "middle")                         
-											.text(function(d, i) { return returnInformationSecond[i].label; });
+											.text(function(d, i) { return get16Characters(returnInformationSecond[i].label); });
 									}
 								else 
 									{console.log("no value from firstLayer or secondLayer. (at buildMapPie())");}
@@ -836,7 +882,15 @@ function buildMapPie(stateName)
 
 										arcs.append("svg:path")
 											.attr("fill", function(d, i) { return color(i); } ) 
-											.attr("d", arc);                                    
+											.attr("d", arc)
+											.on("mouseover", function(d, i) {
+											d3.select("#mapPieSVG").classed("hidden", false);
+											d3.select("#mapPieTip").classed("hidden", false);
+											$('#mapPielValue').html(returnInformation[i].label).show();
+										})
+											.on("mouseout", function() {
+											d3.select("#mapPieTip").classed("hidden", true);
+				   							});                                    
 
 										arcs.append("svg:text")                                     
 												.attr("transform", function(d) {                    
@@ -845,7 +899,7 @@ function buildMapPie(stateName)
 												return "translate(" + arc.centroid(d) + ")";       
 											})
 											.attr("text-anchor", "middle")                         
-											.text(function(d, i) { return returnInformation[i].label; });
+											.text(function(d, i) { return get16Characters(returnInformation[i].label); });
 									}
 								else if (paraSecondLayer)
 									{
@@ -945,13 +999,18 @@ function buildMapPie(stateName)
 										.enter()                            
 										.append("svg:g")                
 										.attr("class", "slice");   
-
-										/*arcs.append("svg:path")
-											.attr("fill", function(d, i) { return color(i); } ) 
-											.attr("d", arc);*/   
+ 
 										arcs.append("svg:path")
 											.attr("fill", function(d, i) { return color(i); } ) 
-											.attr("d", arc);
+											.attr("d", arc)
+											.on("mouseover", function(d, i) {
+											d3.select("#mapPieSVG").classed("hidden", false);
+											d3.select("#mapPieTip").classed("hidden", false);
+											$('#mapPielValue').html(returnInformationSecond[i].label).show();
+										})
+											.on("mouseout", function() {
+											d3.select("#mapPieTip").classed("hidden", true);
+				   							});
 											
 
 										arcs.append("svg:text")                                     
@@ -961,7 +1020,7 @@ function buildMapPie(stateName)
 												return "translate(" + arc.centroid(d) + ")";       
 											})
 											.attr("text-anchor", "middle")                         
-											.text(function(d, i) { return returnInformationSecond[i].label; });
+											.text(function(d, i) { return get16Characters(returnInformationSecond[i].label); });
 									}
 								else 
 									{console.log("no value from firstLayer or secondLayer. (at buildMapPie())");}
@@ -1147,9 +1206,9 @@ function buildMap()
 								d3.select('#valueState')
 									.text(eachState[0]);
 								d3.select('#valueImports')
-									.text(eachState[1]);
+									.text(numberWithCommas(eachState[1]));
 								d3.select('#valueExports')
-									.text(eachState[2]);
+									.text(numberWithCommas(eachState[2]));
 		  			  		}
 				  		});
 							}
@@ -1225,9 +1284,9 @@ function buildMap()
 								d3.select('#valueState')
 									.text(eachState[0]);
 								d3.select('#valueImports')
-									.text(eachState[1]);
+									.text(numberWithCommas(eachState[1]));
 								d3.select('#valueExports')
-									.text(eachState[2]);
+									.text(numberWithCommas(eachState[2]));
 		  			  		}
 				  		});
 							}
@@ -1266,6 +1325,17 @@ function buildMap()
 
 	  });
 	});				
+}
+
+function get16Characters(originalString)
+{
+	if (originalString.length<=16) {return originalString;}
+	else {return originalString.substring(0,15)+"...";}
+}
+
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 //6.2.1 getImportNExport4AState
