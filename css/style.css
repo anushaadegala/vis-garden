@@ -25,6 +25,22 @@ body{
 	left: 850px;
 }
 
+#mapPieTip {
+				display: inline-block;
+				vertical-align: top;
+				margin-right: 7%;
+				float: right;
+				height: auto;
+				padding: 1%;
+				background-color: white;
+				-moz-border-radius: 10px;
+				border-radius: 10px;
+				-webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+				-moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+				box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+				pointer-events: none;
+			}
+
 .mapPiePanel{
 	width: 40%;
 	height: 400px;
@@ -33,7 +49,7 @@ body{
 	left: 850px;
 }
 
-#mapPieSVG.hidden{
+#mapPieSVG.hidden, .hidden, #mapPieTip.hidden{
 	display: none;
 }
 
