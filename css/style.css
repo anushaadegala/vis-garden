@@ -3,6 +3,34 @@ body{
 	width: 100%;
 }
 
+#selectionYear
+{
+	display: inline-block;
+	background-color: #ecf0f1;
+	padding-left: 1%;
+}
+
+#selectionEoI
+{
+	display: inline-block;
+	background-color: #ecf0f1;
+	padding-left: 1%;
+}
+
+#selectionCoC
+{
+	display: inline-block;
+	background-color: #ecf0f1;
+	padding-left: 1%;
+}
+
+#selectionFoS
+{
+	display: inline-block;
+	background-color: #ecf0f1;
+	padding-left: 1%;
+}
+	
 #selectionPanel{
 	width: 100%;
 	height: 50px;
@@ -49,7 +77,7 @@ body{
 	left: 850px;
 }
 
-#mapPieSVG.hidden, .hidden, #mapPieTip.hidden{
+#mapPieSVG.hidden, .hidden, #mapPieTip.hidden, #mapState.hidden{
 	display: none;
 }
 
@@ -86,6 +114,19 @@ div.bar {
 .states-bundle :hover {
   fill: red;
 
+}
+
+.states-bundle :active {
+  fill: red;
+
+}
+
+#mapState
+{
+	font-size: 2em;
+	position: absolute;
+	top: 380px;
+	left:680px;
 }
 
 div.tooltip {   
