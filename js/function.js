@@ -1,7 +1,8 @@
 function loadData()
 {
 	buildMap();
-	buildMapPie();
+	//buildMapPie();
+	d3.select("#mapPieSVG").classed("hidden", true);
 	buildBar();
 	buildBarPie();
 	buildBarLine();
@@ -103,41 +104,922 @@ function buildBar()
 			   });		
 }
 
-function buildMapPie()
+function buildMapPie(stateName)
 {
-			var w = 500;
-			var h = 100;
-			var barPadding = 1;
-			
-			var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
-							11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
+    var w = 400,                        //width
+    h = 400,                            //height
+    r = 200,                            //radius
+    color = d3.scale.category20c();     //builtin range of colors
+
+	var paraCommodity=$("#wayCommodity").prop('checked');
+	var paraCountry=$("#wayCountry").prop('checked');
+	if (paraCountry)
+		{
+			var paraExport=$("#wayExport").prop('checked');
+			var paraImport=$("#wayImport").prop('checked');
+			if (paraExport)
+				{
+					d3.csv("file/country_ex.csv", function(error, data){
+		  					if(error)
+		  					{
+			  					console.log(error);
+		  					}
+		  					else
+		  					{
+								var paraFirstLayer=$("#firstLayer").prop('checked');
+								var paraSecondLayer=$("#secondLayer").prop('checked');
+								var para2013=$("#year2013").prop('checked');
+								var para2014=$("#year2014").prop('checked');
+								var para2015=$("#year2015").prop('checked');
+								var para2016=$("#year2016").prop('checked');
+								if (paraFirstLayer)
+									{
+										var returnInformation=[];
+										var tempAllCountryInformation=[];
+										
+										//build an array and fill 
+										//d[0] country name
+										for (b1=1;b1<country1stLevel.length;b1++)
+											{
+												eachCountry=[country1stLevel[b1][1],0,0,"",0,0,0,0];
+												tempAllCountryInformation.push(eachCountry);
+											}
+										
+										
+										for (ri=1;ri<=25;ri++)
+											{
+												var data4AState = data.filter(function(d)
+																	  {
+												if(d["statename"] == stateName && d["rank"] == ri)
+												{ 
+            										return d;
+        										} 
+    					  						});
+												
+						  						var theAmount=0;
+												if(para2013)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2013;}}))}
+												if(para2014)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2014;}}))}
+												if(para2015)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2015;}}))}
+												if(para2016)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2016;}}))}
+												
+												for (ci=0;ci<tempAllCountryInformation.length;ci++)
+													{
+														if (tempAllCountryInformation[ci][0]==get1stCountryNameby2ndCountryName(data4AState.map(function(d)
+														   {
+															return d.countryd;
+													})))
+															{
+																//add [1] the amount
+																tempAllCountryInformation[ci][1]=(
+																	parseFloat(tempAllCountryInformation[ci][1])+
+																	parseFloat(theAmount)).toFixed(2);
+															}
+													}
+											}
+										for (f=0;f<tempAllCountryInformation.length;f++)
+											{
+												if(parseFloat(tempAllCountryInformation[f][1])>0)
+													{returnInformation.push({
+														"label": tempAllCountryInformation[f][0], "value": parseFloat(tempAllCountryInformation[f][1])});}
+													//{returnInformation.push(tempAllCountryInformation[f]);}
+											}
+										//console.log("CEB");
+										//console.log(returnInformation);
+										var vis = d3.select("body")
+										.append("svg:svg")              
+										.data([returnInformation])                   
+										.attr("width", w)           
+										.attr("height", h)
+										.attr("class","mapPiePanel")
+										.attr("id","mapPieSVG")
+										.append("svg:g")                
+										.attr("transform", "translate(" + r + "," + r + ")")    
+
+									var arc = d3.svg.arc()              
+										.outerRadius(r);
+
+									var pie = d3.layout.pie()           
+										.value(function(d) { return d.value; });    
+
+									var arcs = vis.selectAll("g.slice")     
+										.data(pie)                          
+										.enter()                            
+										.append("svg:g")                
+										.attr("class", "slice");   
+
+										arcs.append("svg:path")
+											.attr("fill", function(d, i) { return color(i); } ) 
+											.attr("d", arc);                                    
+
+										arcs.append("svg:text")                                     
+												.attr("transform", function(d) {                    
+												d.innerRadius = 0;
+												d.outerRadius = r;
+												return "translate(" + arc.centroid(d) + ")";       
+											})
+											.attr("text-anchor", "middle")                         
+											.text(function(d, i) { return returnInformation[i].label; });
+									}
+								else if (paraSecondLayer)
+									{
+										var returnInformationSecond=[];
+										var tempAllCountryInformation=[];
+										for (ri=1;ri<=25;ri++)
+											{
+												var data4AState = data.filter(function(d)
+																	  {
+												if(d["statename"] == stateName && d["rank"] == ri)
+												{ 
+            										return d;
+        										} 
+    					  						});
+												
+												var theAmount=0;
+												if(para2013)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2013;}}))}
+												if(para2014)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2014;}}))}
+												if(para2015)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2015;}}))}
+												if(para2016)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2016;}}))}
+												
+												tempAllCountryInformation.push([
+													(data4AState.map(function(d)
+														   {
+																return d.countryd;
+																		})).toString(),
+													(parseFloat(theAmount)).toFixed(2)]
+												);
+											}
+										for (f=0;f<tempAllCountryInformation.length;f++)
+											{
+												if(parseFloat(tempAllCountryInformation[f][1])>0)
+													{returnInformationSecond.push({
+														"label": tempAllCountryInformation[f][0], "value":parseFloat(tempAllCountryInformation[f][1])});}
+													//{returnInformation.push(tempAllCountryInformation[f]);}
+											}
+										
+										
+										//console.log("CES");
+										//console.log(data);
+										//console.log(returnInformation);
+										var vis = d3.select("body")
+										.append("svg:svg")              
+										.data([returnInformationSecond])                   
+										.attr("width", w)           
+										.attr("height", h)
+										.attr("class","mapPiePanel")
+										.attr("id","mapPieSVG")
+										.append("svg:g")                
+										.attr("transform", "translate(" + r + "," + r + ")")    
+
+									var arc = d3.svg.arc()              
+										.outerRadius(r);
+
+									var pie = d3.layout.pie()           
+										.value(function(d) { return d.value; });    
+
+									var arcs = vis.selectAll("g.slice")     
+										.data(pie)                          
+										.enter()                            
+										.append("svg:g")                
+										.attr("class", "slice");   
+
+										/*arcs.append("svg:path")
+											.attr("fill", function(d, i) { return color(i); } ) 
+											.attr("d", arc);*/   
+										arcs.append("svg:path")
+											.attr("fill", function(d, i) { return color(i); } ) 
+											.attr("d", arc);
+											
+
+										arcs.append("svg:text")                                     
+												.attr("transform", function(d) {                    
+												d.innerRadius = 0;
+												d.outerRadius = r;
+												return "translate(" + arc.centroid(d) + ")";       
+											})
+											.attr("text-anchor", "middle")                         
+											.text(function(d, i) { return returnInformationSecond[i].label; });
+									}
+								else 
+									{console.log("no value from firstLayer or secondLayer. (at buildMapPie())");}
+		  					}
+							});
+				}
+			else if (paraImport)
+				{
+					d3.csv("file/country_in.csv", function(error, data){
+		  					if(error)
+		  					{
+			  					console.log(error);
+		  					}
+		  					else
+		  					{
+								var paraFirstLayer=$("#firstLayer").prop('checked');
+								var paraSecondLayer=$("#secondLayer").prop('checked');
+								var para2013=$("#year2013").prop('checked');
+								var para2014=$("#year2014").prop('checked');
+								var para2015=$("#year2015").prop('checked');
+								var para2016=$("#year2016").prop('checked');
+								if (paraFirstLayer)
+									{
+										var returnInformation=[];
+										var tempAllCountryInformation=[];
+										
+										//build an array and fill 
+										//d[0] country name
+										for (b1=1;b1<country1stLevel.length;b1++)
+											{
+												eachCountry=[country1stLevel[b1][1],0,0,"",0,0,0,0];
+												tempAllCountryInformation.push(eachCountry);
+											}
+										
+										
+										for (ri=1;ri<=25;ri++)
+											{
+												var data4AState = data.filter(function(d)
+																	  {
+												if(d["statename"] == stateName && d["rank"] == ri)
+												{ 
+            										return d;
+        										} 
+    					  						});
+												
+						  						var theAmount=0;
+												if(para2013)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2013;}}))}
+												if(para2014)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2014;}}))}
+												if(para2015)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2015;}}))}
+												if(para2016)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2016;}}))}
+												
+												for (ci=0;ci<tempAllCountryInformation.length;ci++)
+													{
+														if (tempAllCountryInformation[ci][0]==get1stCountryNameby2ndCountryName(data4AState.map(function(d)
+														   {
+															return d.countryd;
+													})))
+															{
+																//add [1] the amount
+																tempAllCountryInformation[ci][1]=(
+																	parseFloat(tempAllCountryInformation[ci][1])+
+																	parseFloat(theAmount)).toFixed(2);
+															}
+													}
+											}
+										for (f=0;f<tempAllCountryInformation.length;f++)
+											{
+												if(parseFloat(tempAllCountryInformation[f][1])>0)
+													{returnInformation.push({
+														"label": tempAllCountryInformation[f][0], "value": parseFloat(tempAllCountryInformation[f][1])});}
+													//{returnInformation.push(tempAllCountryInformation[f]);}
+											}
+										//console.log("CEB");
+										//console.log(returnInformation);
+										var vis = d3.select("body")
+										.append("svg:svg")              
+										.data([returnInformation])                   
+										.attr("width", w)           
+										.attr("height", h)
+										.attr("class","mapPiePanel")
+										.attr("id","mapPieSVG")
+										.append("svg:g")                
+										.attr("transform", "translate(" + r + "," + r + ")")    
+
+									var arc = d3.svg.arc()              
+										.outerRadius(r);
+
+									var pie = d3.layout.pie()           
+										.value(function(d) { return d.value; });    
+
+									var arcs = vis.selectAll("g.slice")     
+										.data(pie)                          
+										.enter()                            
+										.append("svg:g")                
+										.attr("class", "slice");   
+
+										arcs.append("svg:path")
+											.attr("fill", function(d, i) { return color(i); } ) 
+											.attr("d", arc);                                    
+
+										arcs.append("svg:text")                                     
+												.attr("transform", function(d) {                    
+												d.innerRadius = 0;
+												d.outerRadius = r;
+												return "translate(" + arc.centroid(d) + ")";       
+											})
+											.attr("text-anchor", "middle")                         
+											.text(function(d, i) { return returnInformation[i].label; });
+									}
+								else if (paraSecondLayer)
+									{
+										var returnInformationSecond=[];
+										var tempAllCountryInformation=[];
+										for (ri=1;ri<=25;ri++)
+											{
+												var data4AState = data.filter(function(d)
+																	  {
+												if(d["statename"] == stateName && d["rank"] == ri)
+												{ 
+            										return d;
+        										} 
+    					  						});
+												
+												var theAmount=0;
+												if(para2013)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2013;}}))}
+												if(para2014)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2014;}}))}
+												if(para2015)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2015;}}))}
+												if(para2016)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2016;}}))}
+												
+												tempAllCountryInformation.push([
+													(data4AState.map(function(d)
+														   {
+																return d.countryd;
+																		})).toString(),
+													(parseFloat(theAmount)).toFixed(2)]
+												);
+											}
+										for (f=0;f<tempAllCountryInformation.length;f++)
+											{
+												if(parseFloat(tempAllCountryInformation[f][1])>0)
+													{returnInformationSecond.push({
+														"label": tempAllCountryInformation[f][0], "value":parseFloat(tempAllCountryInformation[f][1])});}
+													//{returnInformation.push(tempAllCountryInformation[f]);}
+											}
+										
+										
+										//console.log("CES");
+										//console.log(data);
+										//console.log(returnInformation);
+										var vis = d3.select("body")
+										.append("svg:svg")              
+										.data([returnInformationSecond])                   
+										.attr("width", w)           
+										.attr("height", h)
+										.attr("class","mapPiePanel")
+										.attr("id","mapPieSVG")
+										.append("svg:g")                
+										.attr("transform", "translate(" + r + "," + r + ")")    
+
+									var arc = d3.svg.arc()              
+										.outerRadius(r);
+
+									var pie = d3.layout.pie()           
+										.value(function(d) { return d.value; });    
+
+									var arcs = vis.selectAll("g.slice")     
+										.data(pie)                          
+										.enter()                            
+										.append("svg:g")                
+										.attr("class", "slice");   
+
+										/*arcs.append("svg:path")
+											.attr("fill", function(d, i) { return color(i); } ) 
+											.attr("d", arc);*/   
+										arcs.append("svg:path")
+											.attr("fill", function(d, i) { return color(i); } ) 
+											.attr("d", arc);
+											
+
+										arcs.append("svg:text")                                     
+												.attr("transform", function(d) {                    
+												d.innerRadius = 0;
+												d.outerRadius = r;
+												return "translate(" + arc.centroid(d) + ")";       
+											})
+											.attr("text-anchor", "middle")                         
+											.text(function(d, i) { return returnInformationSecond[i].label; });
+									}
+								else 
+									{console.log("no value from firstLayer or secondLayer. (at buildMapPie())");}
+		  					}
+							});
+				}
+			else 
+				{console.log("no value from exports or imports. (at buildMapPie())");}
+		}
+	else if (paraCommodity)
+		{
+			var paraExport=$("#wayExport").prop('checked');
+			var paraImport=$("#wayImport").prop('checked');
+			if (paraExport)
+				{
+					d3.csv("file/commodity_ex.csv", function(error, data){
+		  					if(error)
+		  					{
+			  					console.log(error);
+		  					}
+		  					else
+		  					{
+								var paraFirstLayer=$("#firstLayer").prop('checked');
+								var paraSecondLayer=$("#secondLayer").prop('checked');
+								var para2013=$("#year2013").prop('checked');
+								var para2014=$("#year2014").prop('checked');
+								var para2015=$("#year2015").prop('checked');
+								var para2016=$("#year2016").prop('checked');
+								if (paraFirstLayer)
+									{
+										var returnInformation=[];
+										var tempAllCommodityInformation=[];
+										for (b1=1;b1<commodity1stLevel.length;b1++)
+											{
+												eachCommodity=[commodity1stLevel[b1][1],0];
+												tempAllCommodityInformation.push(eachCommodity);
+											}
+										
+										//console.log(tempAllCommodityInformation);
+										for (ri=1;ri<=25;ri++)
+											{
+												var data4AState = data.filter(function(d)
+																	  {
+												if(d["statename"] == stateName && d["rank"] == ri)
+												{ 
+            										return d;
+        										} 
+    					  						});
+												
+												var theAmount=0;
+												if(para2013)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2013;}}))}
+												if(para2014)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2014;}}))}
+												if(para2015)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2015;}}))}
+												if(para2016)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2016;}}))}
+												
+											for (ci=0;ci<tempAllCommodityInformation.length;ci++)
+													{
+														if (tempAllCommodityInformation[ci][0]==get1stCommodityNameby2ndCommodityName(data4AState.map(function(d)
+														   {
+															return d.hs6;
+													})))
+															{
+																//add [1] the amount
+																tempAllCommodityInformation[ci][1]=(
+																	parseFloat(tempAllCommodityInformation[ci][1])+
+																	parseFloat(theAmount)).toFixed(2);
+															}
+													}
+											}
+
+										for (f=0;f<tempAllCommodityInformation.length;f++)
+											{
+												if(parseFloat(tempAllCommodityInformation[f][1])>0)
+													{returnInformation.push({
+														"label": tempAllCommodityInformation[f][0], "value":parseFloat(tempAllCommodityInformation[f][1])});}
+													//{returnInformation.push(tempAllCommodityInformation[f]);}
+											}
+
+										//console.log("CEB");
+										//console.log(returnInformation);
+										var vis = d3.select("body")
+										.append("svg:svg")              
+										.data([returnInformation])                   
+										.attr("width", w)           
+										.attr("height", h)
+										.attr("class","mapPiePanel")
+										.attr("id","mapPieSVG")
+										.append("svg:g")                
+										.attr("transform", "translate(" + r + "," + r + ")")    
+
+									var arc = d3.svg.arc()              
+										.outerRadius(r);
+
+									var pie = d3.layout.pie()           
+										.value(function(d) { return d.value; });    
+
+									var arcs = vis.selectAll("g.slice")     
+										.data(pie)                          
+										.enter()                            
+										.append("svg:g")                
+										.attr("class", "slice");   
+
+										arcs.append("svg:path")
+											.attr("fill", function(d, i) { return color(i); } ) 
+											.attr("d", arc);                                    
+
+										arcs.append("svg:text")                                     
+												.attr("transform", function(d) {                    
+												d.innerRadius = 0;
+												d.outerRadius = r;
+												return "translate(" + arc.centroid(d) + ")";       
+											})
+											.attr("text-anchor", "middle")                         
+											.text(function(d, i) { return returnInformation[i].label; });
+									}
+								else if (paraSecondLayer)
+									{
+										var returnInformationSecond=[];
+										var tempAllCommodityInformation=[];
+										for (ri=1;ri<=25;ri++)
+											{
+												var data4AState = data.filter(function(d)
+																	  {
+												if(d["statename"] == stateName && d["rank"] == ri)
+												{ 
+            										return d;
+        										} 
+    					  						});
+												
+												var theAmount=0;
+												if(para2013)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2013;}}))}
+												if(para2014)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2014;}}))}
+												if(para2015)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2015;}}))}
+												if(para2016)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2016;}}))}
+												
+												tempAllCommodityInformation.push([
+													getCommodityNamebyCommodityCodeFromCVS(data4AState.map(function(d)
+														   {
+															return d.hs6;
+													})),
+													(parseFloat(theAmount)).toFixed(2)]
+												);
+											}
+										
+										//combine the same name of commodity names
+										var temp2AllCommodityInformation=[];
+										for(tj=0;tj<tempAllCommodityInformation.length;tj++)
+											{
+												if(tj==0)
+													{
+														temp2AllCommodityInformation.push(tempAllCommodityInformation[tj]);
+													}
+												else
+												{
+													var repeated=false;
+													for (tk=0;tk<temp2AllCommodityInformation.length;tk++)
+														{	
+															if(temp2AllCommodityInformation[tk][0]==tempAllCommodityInformation[tj][0])
+																{
+																	//edit
+																	//d[1] amount
+																	temp2AllCommodityInformation[tk][1]=
+																		(parseFloat(temp2AllCommodityInformation[tk][1])+
+																		parseFloat(tempAllCommodityInformation[tj][1])).toFixed(2);
+																		
+																	repeated=true;
+																	break;
+																}
+														}
+													//add
+													if(!repeated)
+														{
+															temp2AllCommodityInformation.push(tempAllCommodityInformation[tj]);
+														}
+												}
+											}
+										for (f=0;f<temp2AllCommodityInformation.length;f++)
+											{
+												if(parseFloat(temp2AllCommodityInformation[f][1])>0)
+													{returnInformationSecond.push({
+														"label": tempAllCommodityInformation[f][0], "value":parseFloat(tempAllCommodityInformation[f][1])});}
+													//{returnInformation.push(temp2AllCommodityInformation[f]);}
+											}
+										
+										
+										//console.log("CES");
+										//console.log(data);
+										//console.log(returnInformation);
+										var vis = d3.select("body")
+										.append("svg:svg")              
+										.data([returnInformationSecond])                   
+										.attr("width", w)           
+										.attr("height", h)
+										.attr("class","mapPiePanel")
+										.attr("id","mapPieSVG")
+										.append("svg:g")                
+										.attr("transform", "translate(" + r + "," + r + ")")    
+
+									var arc = d3.svg.arc()              
+										.outerRadius(r);
+
+									var pie = d3.layout.pie()           
+										.value(function(d) { return d.value; });    
+
+									var arcs = vis.selectAll("g.slice")     
+										.data(pie)                          
+										.enter()                            
+										.append("svg:g")                
+										.attr("class", "slice");   
+
+										/*arcs.append("svg:path")
+											.attr("fill", function(d, i) { return color(i); } ) 
+											.attr("d", arc);*/   
+										arcs.append("svg:path")
+											.attr("fill", function(d, i) { return color(i); } ) 
+											.attr("d", arc);
+											
+
+										arcs.append("svg:text")                                     
+												.attr("transform", function(d) {                    
+												d.innerRadius = 0;
+												d.outerRadius = r;
+												return "translate(" + arc.centroid(d) + ")";       
+											})
+											.attr("text-anchor", "middle")                         
+											.text(function(d, i) { return returnInformationSecond[i].label; });
+									}
+								else 
+									{console.log("no value from firstLayer or secondLayer. (at buildMapPie())");}
+		  					}
+							});
+				}
+			else if (paraImport)
+				{
+					d3.csv("file/commodity_in.csv", function(error, data){
+		  					if(error)
+		  					{
+			  					console.log(error);
+		  					}
+		  					else
+		  					{
+								var paraFirstLayer=$("#firstLayer").prop('checked');
+								var paraSecondLayer=$("#secondLayer").prop('checked');
+								var para2013=$("#year2013").prop('checked');
+								var para2014=$("#year2014").prop('checked');
+								var para2015=$("#year2015").prop('checked');
+								var para2016=$("#year2016").prop('checked');
+								if (paraFirstLayer)
+									{
+										var returnInformation=[];
+										var tempAllCommodityInformation=[];
+										for (b1=1;b1<commodity1stLevel.length;b1++)
+											{
+												eachCommodity=[commodity1stLevel[b1][1],0];
+												tempAllCommodityInformation.push(eachCommodity);
+											}
+										
+										//console.log(tempAllCommodityInformation);
+										for (ri=1;ri<=25;ri++)
+											{
+												var data4AState = data.filter(function(d)
+																	  {
+												if(d["statename"] == stateName && d["rank"] == ri)
+												{ 
+            										return d;
+        										} 
+    					  						});
+												
+												var theAmount=0;
+												if(para2013)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2013;}}))}
+												if(para2014)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2014;}}))}
+												if(para2015)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2015;}}))}
+												if(para2016)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2016;}}))}
+												
+											for (ci=0;ci<tempAllCommodityInformation.length;ci++)
+													{
+														if (tempAllCommodityInformation[ci][0]==get1stCommodityNameby2ndCommodityName(data4AState.map(function(d)
+														   {
+															return d.hs6;
+													})))
+															{
+																//add [1] the amount
+																tempAllCommodityInformation[ci][1]=(
+																	parseFloat(tempAllCommodityInformation[ci][1])+
+																	parseFloat(theAmount)).toFixed(2);
+															}
+													}
+											}
+
+										for (f=0;f<tempAllCommodityInformation.length;f++)
+											{
+												if(parseFloat(tempAllCommodityInformation[f][1])>0)
+													{returnInformation.push({
+														"label": tempAllCommodityInformation[f][0], "value":parseFloat(tempAllCommodityInformation[f][1])});}
+													//{returnInformation.push(tempAllCommodityInformation[f]);}
+											}
+
+										//console.log("CEB");
+										//console.log(returnInformation);
+										var vis = d3.select("body")
+										.append("svg:svg")              
+										.data([returnInformation])                   
+										.attr("width", w)           
+										.attr("height", h)
+										.attr("class","mapPiePanel")
+										.attr("id","mapPieSVG")
+										.append("svg:g")                
+										.attr("transform", "translate(" + r + "," + r + ")")    
+
+									var arc = d3.svg.arc()              
+										.outerRadius(r);
+
+									var pie = d3.layout.pie()           
+										.value(function(d) { return d.value; });    
+
+									var arcs = vis.selectAll("g.slice")     
+										.data(pie)                          
+										.enter()                            
+										.append("svg:g")                
+										.attr("class", "slice");   
+
+										arcs.append("svg:path")
+											.attr("fill", function(d, i) { return color(i); } ) 
+											.attr("d", arc);                                    
+
+										arcs.append("svg:text")                                     
+												.attr("transform", function(d) {                    
+												d.innerRadius = 0;
+												d.outerRadius = r;
+												return "translate(" + arc.centroid(d) + ")";       
+											})
+											.attr("text-anchor", "middle")                         
+											.text(function(d, i) { return returnInformation[i].label; });
+									}
+								else if (paraSecondLayer)
+									{
+										var returnInformationSecond=[];
+										var tempAllCommodityInformation=[];
+										for (ri=1;ri<=25;ri++)
+											{
+												var data4AState = data.filter(function(d)
+																	  {
+												if(d["statename"] == stateName && d["rank"] == ri)
+												{ 
+            										return d;
+        										} 
+    					  						});
+												
+												var theAmount=0;
+												if(para2013)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2013;}}))}
+												if(para2014)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2014;}}))}
+												if(para2015)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2015;}}))}
+												if(para2016)
+													{theAmount=parseFloat(theAmount)+parseFloat(data4AState.map(function(d) {{return d.val2016;}}))}
+												
+												tempAllCommodityInformation.push([
+													getCommodityNamebyCommodityCodeFromCVS(data4AState.map(function(d)
+														   {
+															return d.hs6;
+													})),
+													(parseFloat(theAmount)).toFixed(2)]
+												);
+											}
+										
+										//combine the same name of commodity names
+										var temp2AllCommodityInformation=[];
+										for(tj=0;tj<tempAllCommodityInformation.length;tj++)
+											{
+												if(tj==0)
+													{
+														temp2AllCommodityInformation.push(tempAllCommodityInformation[tj]);
+													}
+												else
+												{
+													var repeated=false;
+													for (tk=0;tk<temp2AllCommodityInformation.length;tk++)
+														{	
+															if(temp2AllCommodityInformation[tk][0]==tempAllCommodityInformation[tj][0])
+																{
+																	//edit
+																	//d[1] amount
+																	temp2AllCommodityInformation[tk][1]=
+																		(parseFloat(temp2AllCommodityInformation[tk][1])+
+																		parseFloat(tempAllCommodityInformation[tj][1])).toFixed(2);
+																		
+																	repeated=true;
+																	break;
+																}
+														}
+													//add
+													if(!repeated)
+														{
+															temp2AllCommodityInformation.push(tempAllCommodityInformation[tj]);
+														}
+												}
+											}
+										for (f=0;f<temp2AllCommodityInformation.length;f++)
+											{
+												if(parseFloat(temp2AllCommodityInformation[f][1])>0)
+													{returnInformationSecond.push({
+														"label": tempAllCommodityInformation[f][0], "value":parseFloat(tempAllCommodityInformation[f][1])});}
+													//{returnInformation.push(temp2AllCommodityInformation[f]);}
+											}
+										
+										
+										//console.log("CES");
+										//console.log(data);
+										//console.log(returnInformation);
+										var vis = d3.select("body")
+										.append("svg:svg")              
+										.data([returnInformationSecond])                   
+										.attr("width", w)           
+										.attr("height", h)
+										.attr("class","mapPiePanel")
+										.attr("id","mapPieSVG")
+										.append("svg:g")                
+										.attr("transform", "translate(" + r + "," + r + ")")    
+
+									var arc = d3.svg.arc()              
+										.outerRadius(r);
+
+									var pie = d3.layout.pie()           
+										.value(function(d) { return d.value; });    
+
+									var arcs = vis.selectAll("g.slice")     
+										.data(pie)                          
+										.enter()                            
+										.append("svg:g")                
+										.attr("class", "slice");   
+
+										/*arcs.append("svg:path")
+											.attr("fill", function(d, i) { return color(i); } ) 
+											.attr("d", arc);*/   
+										arcs.append("svg:path")
+											.attr("fill", function(d, i) { return color(i); } ) 
+											.attr("d", arc);
+											
+
+										arcs.append("svg:text")                                     
+												.attr("transform", function(d) {                    
+												d.innerRadius = 0;
+												d.outerRadius = r;
+												return "translate(" + arc.centroid(d) + ")";       
+											})
+											.attr("text-anchor", "middle")                         
+											.text(function(d, i) { return returnInformationSecond[i].label; });
+									}
+								else 
+									{console.log("no value from firstLayer or secondLayer. (at buildMapPie())");}
+		  					}
+							});
+				}
+			else 
+				{console.log("no value from exports or imports. (at buildMapPie())");}
+		}
+	else{
+		console.log("no value from country or commodity. (at buildMapPie())");
+	}
 	
-			  var svg4barSVG = d3.select("#mapPieSVG")
-			                    .attr("width", w)
-								.attr("height", h);
-			  
-			  svg4barSVG.selectAll("rect")
-			   .data(dataset)
-			   .enter()
-			   .append("rect")
-			   .attr("x", function(d, i) {
-			   		return i * (w / dataset.length);
-			   })
-			   .attr("y", function(d) {
-			   		return h - (d * 4);
-			   })
-			   .attr("width", w / dataset.length - barPadding)
-			   .attr("height", function(d) {
-			   		return d * 4;
-			   })
-			   .attr("fill", function(d) {
-					return "rgb(0, 0, " + (d * 10) + ")";
-			   });
+    /*data = [{"label":"one", "value":20}, 
+            {"label":"two", "value":50}, 
+            {"label":"three", "value":30}];*/
+    
+	//from here
+    /*var vis = d3.select("body")
+        .append("svg:svg")              
+        .data([data])                   
+        .attr("width", w)           
+        .attr("height", h)
+		.attr("class","mapPiePanel")
+	    .attr("id","mapPieSVG")
+        .append("svg:g")                
+        .attr("transform", "translate(" + r + "," + r + ")")    
+
+    var arc = d3.svg.arc()              
+        .outerRadius(r);
+
+    var pie = d3.layout.pie()           
+        .value(function(d) { return d.value; });    
+
+    var arcs = vis.selectAll("g.slice")     
+        .data(pie)                          
+        .enter()                            
+        .append("svg:g")                
+        .attr("class", "slice");   
+
+        arcs.append("svg:path")
+            .attr("fill", function(d, i) { return color(i); } ) 
+            .attr("d", arc);                                    
+
+        arcs.append("svg:text")                                     
+                .attr("transform", function(d) {                    
+                d.innerRadius = 0;
+                d.outerRadius = r;
+                return "translate(" + arc.centroid(d) + ")";       
+            })
+            .attr("text-anchor", "middle")                         
+            .text(function(d, i) { return data[i].label; });  */ 
+	//to here
 }
 
 function buildMap()
 {	
-	var width = 1000;
+	var width = 800;
 	var height = 600;
 	var pupuset = [];
 
@@ -176,7 +1058,10 @@ function buildMap()
 		  .attr("d", path)
 		  .attr("stroke", "white")
 		  .attr("class", "states")
-		.on("mouseover", function(d) {
+		  .on("click", function(d){
+		      buildMapPie(fullNames[d.id]);
+		  })
+		  .on("mouseover", function(d) {
 					var eachState=[];
 				  		var stateName=fullNames[d.id];
 				  
@@ -335,7 +1220,7 @@ function buildMap()
 								
 								d3.select("#tooltip")
 								.style("left", path.centroid(d)[0]+"px")
-								.style("top", path.centroid(d)[1]-50+"px");
+								.style("top", path.centroid(d)[1]-500+"px");
 								
 								d3.select('#valueState')
 									.text(eachState[0]);
