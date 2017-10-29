@@ -4,6 +4,7 @@ function loadData()
 	//buildMapPie();
 	d3.select(".mapPieSVG").classed("hidden", true);
 	d3.select("#mapPieTip").classed("hidden", true);
+	d3.select("#mapState").classed("hidden", true);
 	buildBar();
 	buildBarPie();
 	buildBarLine();
@@ -1119,6 +1120,8 @@ function buildMap()
 		  .attr("class", "states")
 		  .on("click", function(d){
 		      buildMapPie(fullNames[d.id]);
+			  d3.select("#mapState").classed("hidden", false);
+			  $('#mapState').html(fullNames[d.id]).show();
 		  })
 		  .on("mouseover", function(d) {
 					var eachState=[];
@@ -1325,6 +1328,12 @@ function buildMap()
 
 	  });
 	});				
+}
+
+
+function clicklegend(d) {
+  legend[0][selectedColor].style.stroke = null;
+  legend[0][selectedColor = d].style.stroke = "#000";
 }
 
 function get16Characters(originalString)
