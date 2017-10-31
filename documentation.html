@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Enterprise Integrated Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- CSS -->
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,700,400italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/commonT.css" />
+
+    <!-- favicon -->
+    <!-- for FF, Chrome, Opera -->
+    <link rel="icon" type="image/png" href="/image/icon/favicon-small.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="/image/icon/favicon-large.png" sizes="32x32" />
+    <!-- for IE -->
+    <link rel="icon" type="image/x-icon" href="/image/icon/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="/image/icon/favicon.ico" />
+
+    <!-- Javascript -->
+    <script src="Scripts/jquery-1.9.1.min.js"></script>
+    <script src="Scripts/modernizr.custom.js"></script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="main">
+            <div class="outerContainer">
+                <div class="innerContainer">
+                    <div class="line disappear"></div>
+                    <header id="objective">
+                        <a href="playground.html">
+							<img src="image/icon/globe.png" /></a>
+                        <article>
+                            <h1><a href="playground.html">This visualization tool helps analysts to view data visually. Click here to go to the Playground.</a></h1>
+                        </article>
+                    </header>
+
+                    <div class="line"></div>
+                    <!--STORY-->
+                    <section id="story">
+                        <h2>Introduction</h2>
+                        <article>
+                            <header role="banner">
+                                <p>The main goal of this project is to visualize the data of the U.S. exports and imports through which any individual can get to know and investigate more about the goods and services that are being shipped from the U.S. to foreign countries also entering the U.S. from foreign countries. As a part of this, we accessed foreign trade data from United States census.gov website. With the prior and extended knowledge on D3.js, we team of 3, have written the code in such a way to get the U.S. state map and other associated charts which are completely interactive with a touch of fun in our project. </p>
+                            </header>
+                        </article>
+                    </section>
+                    
+                    <!--VIDEO-->
+                    <section id="video">
+                        <h2>Video Introduction</h2>
+                        <article>
+                            <header role="banner">
+                                <p></p>
+                            </header>
+                            <object data="http://www.youtube.com/embed/EhpOcyOixnc" width="630" height="433"></object>
+                        </article>
+                    </section>
+
+                    <!--ROLE-->
+                    <section id="role">
+                        <h2>Team Members</h2>
+                        <article>
+                            <header role="banner">
+                                <p>Anusha Degala</p>
+                                <p>Benjamin St John</p>
+                                <p>Yishan Tsai</p>
+                            </header>
+                        </article>
+                    </section>
+
+                    <!--DESIGN PROCESS-->
+                    <section id="process">
+                        <h2>Design Process</h2>
+                        <article>
+                            <header role="banner">
+                                <div class="divCenter">
+                                    <ol class="tilted-list">
+                                        <li>As a first step in the design process, we understood all the requirements of this project and then planned to come up with a layout of our webpage. Finally after undergoing pros and cons of every design and visualization chart also considering time constraint of this project, we came up with the following layout.</li>
+                                        <li>The layout consists of checkboxes for years from 2013-2016 and radio buttons for trading options (imports and exports) followed by countries and commodities. And then we have radio buttons for first layer and second layer. First layer: where we can view small picture of the countries categorized based on region wise in the world , Second layer: where we can view big picture of all the countries in every region..</li>
+                                        <li>Then we have a state map with tooltip functionality of the United States including Alaska and Hawaii and excluding territories in the map also in the dataset. Subsequently when a user click on a particular state after choosing the options from checkboxes and radio buttons, a pie chart will be displayed showing either the countries or commodities based on the amount of imports and exports. At the bottom of the page, we have three charts (bar chart, pie chart and line chart) which are interactive with each other which gives more clear cut idea on the U.S. foreign trade from the years 2013-2016.</li>
+                                        <li>We kept changing the layout and data structure either because we figured out what we wanted is not logical or new ideas occur to us. For example, about the fun part, we wanted to implement the pac man to, for instance, make it walk through the way from the most amount of exports to the least amount of ones.</li>
+                                    </ol>
+                                </div>
+                            </header>
+                            <figure>
+                                <img src="image/icon/layout.png" alt="This is the Nth version of our sketches."/>
+                                <figcaption>You are able to start from either picking a state at the map or clicking a commodity or country on the bar chart.</figcaption>
+                            </figure>
+                        </article>
+                    </section>
+                    
+                    <!--DESIGN CHOICES-->
+                    <section id="process02">
+                        <h2>Design Choices</h2>
+                        <article>
+                            <header role="banner">
+                                <div class="divCenter">
+                                    <ol class="tilted-list">
+                                        <li><strong>About the color: </strong>All the colors in this project were used with the help of Color Brewer and tested with Color Oracle. For example,  while we are working on the map, we used red color to be filled in the states on mouseover and Green text color for the state code names. But when we checked with color oracle tool if our map even works for people who have colorblindness or not, id did not work for one among three types of colorblindness. Then we tried with other different colors and then came up with #FFE333 which is near to yellow color.</li>
+                                        <li><strong>About the data structure: </strong>We tried and gave up some structures which We wanted to use for this project, although we had tried it for the four days in a row, including the Fall Break. It isn’t a Fall Break for us, but this project ‘broke our hearts.’ One reason we spent so much time on data structure which we didn’t use eventually is because of the limitation of d3.js. We thought about creating functions which provide data to feed charts and we could use these functions repeatedly. However, we were wrong. The only one way to get data is to retrieve data while building charts. That is to say, we should build data, for example, in an array every time we created charts. That’s probably because of the order of execution of d3.js. Moreover, another thing we tried for fetching data from csv files is we reduced data, leaving only 3 states, in order to valid if we get the right number from those files.</li>
+                                    </ol>
+                                </div>
+                            </header>
+                            <figure>
+                                <img src="image/icon/functions.png" alt="a function example"/>
+                                <figcaption>This is one of functions we wanted to use but gave it up because of the characteristic of d3.js.</figcaption>
+                            </figure>
+                        </article>
+                    </section>
+                    
+                    <!--REFERENCES-->
+                    <section id="reference">
+                        <h2>Story</h2>
+                        <article>
+                            <header role="banner">
+                                <p>Color Brewer, http://colorbrewer2.org</p>
+                                <p>Color Oracle, http://colororacle.org</p>
+                                <p>Commodity Code, https://www.foreign-trade.com/reference/hscode.htm (retrieved October, 2017)</p>
+                                <p>Foreign Trade Data, https://www.census.gov/foreign-trade/statistics/state/data/index.html(retrieved October, 2017)</p>
+                                <p>Murray S. (2013) Interactive Data Visualization for the Web. O’REILLY.</p>
+                                <p>Project 2, http://vis.ninja/teaching/H517/project2 (retrieved October, 2017)</p>
+                                <p>World Regions, http://www.internetworldstats.com/list1.htm#ME (retrieved October, 2017)</p>
+                            </header>
+                        </article>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <!-- #main -->
+
+
+        <!-- Footer -->
+        <footer role="contentinfo" class="footer">
+            <!-- Footer Links -->
+            <p class="footerRight">© 2017 Ben, Anusha, and Yishan</p>
+        </footer>
+        <!-- /footer -->
+    </div>
+    <!-- /#wrapper -->
+</body>
+</html>
