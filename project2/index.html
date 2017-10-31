@@ -1,0 +1,42 @@
+<!DOCTYPE>
+<html>
+<head>
+    
+<link href="css/style.css" type="text/css" rel="stylesheet">
+
+<script src="javascript/dictionary.js"></script>
+<title>Baby's First Bar Chart</title>
+</head>
+    
+<body>
+    
+    <form class="myInput">
+        <input type="checkbox" class="years" id="y2013" checked>2013
+        <input type="checkbox" class="years" id="y2014">2014
+        <input type="checkbox" class="years" id="y2015">2015
+        <input type="checkbox" class="years" id="y2016">2016
+    </form>
+    
+    <form class="myInput">
+        <input type="radio" class="trade" name="transfer" id="import" checked>Import
+        <input type="radio" class="trade" name="transfer" id="export">Export
+    </form>
+    
+    <form class="myInput">
+        <input type="radio" class="category" name="filter" id="country" checked>Country
+        <input type="radio" class="category" name="filter" id="commodity">Commodity
+    </form>
+    
+    <div class="barContainer">
+
+    </div>   
+    
+   <div class="pieContainer">
+    </div>
+    
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+<script src="javascript/barChart.js"></script>
+
+</body>
+</html>
