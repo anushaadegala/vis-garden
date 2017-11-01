@@ -9,9 +9,10 @@ function loadData()
 	d3.select(".mapPieSVG").classed("hidden", true);
 	d3.select("#mapPieTip").classed("hidden", true);
 	d3.select("#mapState").classed("hidden", true);
-	buildBar();
-	buildBarPie();
-	buildBarLine();
+	//buildBar();
+	//buildBarPie();
+	//buildBarLine();
+	
 }
 
 function buildBarLine()
@@ -112,9 +113,9 @@ function buildBar()
 
 function buildMapPie(stateName)
 {
-    var w = 400,                        //width
-    h = 400,                            //height
-    r = 200,                            //radius
+    var w = 300,                        //width
+    h = 300,                            //height
+    r = 150,                            //radius
     color = d3.scale.category20c();     //builtin range of colors
 
 	var paraCommodity=$("#wayCommodity").prop('checked');
@@ -1088,8 +1089,8 @@ function buildMap()
 	var pupuset = [];
 
 	var projection = d3.geo.albersUsa()
-		.scale(1000)
-		.translate([width/2, height / 2]);
+		.scale(800)
+		.translate([width/2.5, height / 3]);
 
 	var path = d3.geo.path()
 		.projection(projection);
