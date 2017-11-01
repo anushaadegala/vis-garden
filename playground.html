@@ -36,25 +36,25 @@
 	</div>
 
 	<div id="selectionYear">
-		<input type="checkbox" id="year2013" name="year2013" checked="true" onchange="loadData()">2013
-		<input type="checkbox" id="year2014" name="year2014" checked="true" onchange="loadData()">2014
-		<input type="checkbox" id="year2015" name="year2015" checked="true" onchange="loadData()">2015
-		<input type="checkbox" id="year2016" name="year2016" checked="true" onchange="loadData()">2016
+		<input type="checkbox" id="year2013" class="myInput" name="year2013" checked="true" onchange="loadData()">2013
+		<input type="checkbox" id="year2014" class="myInput" name="year2014" checked="true" onchange="loadData()">2014
+		<input type="checkbox" id="year2015" class="myInput" name="year2015" checked="true" onchange="loadData()">2015
+		<input type="checkbox" id="year2016" class="myInput" name="year2016" checked="true" onchange="loadData()">2016
 	</div>
 	
 	<div id="selectionEoI">
-		<input type="radio" id= "wayExport" name="eOi" checked="true" onchange="loadData()">Export
-		<input type="radio" id = "wayImport" name="eOi" onchange="loadData()">Import
+		<input type="radio" id= "wayExport" class="myInput" name="eOi" checked="true" onchange="loadData()">Export
+		<input type="radio" id = "wayImport" class="myInput" name="eOi" onchange="loadData()">Import
 	</div>
 	
 	<div id="selectionCoC">
-		<input type="radio" id = "wayCountry" name="cOc" checked="true" onchange="loadData()">Country
-		<input type="radio" id= "wayCommodity" name="cOc" onchange="loadData()">Commodity
+		<input type="radio" id = "wayCountry" class="myInput" name="cOc" checked="true" onchange="loadData()">Country
+		<input type="radio" id= "wayCommodity" class="myInput" name="cOc" onchange="loadData()">Commodity
 	</div>
 	
 	<div id="selectionFoS">
-		<input type="radio" id= "firstLayer" name="fOs" checked="true" onchange="loadData()">First Layer
-		<input type="radio" id = "secondLayer" name="fOs" onchange="loadData()">Second Layer
+		<input type="radio" id= "firstLayer" class="myInput" name="fOs" checked="true" onchange="loadData()">First Layer
+		<input type="radio" id = "secondLayer" class="myInput" name="fOs" onchange="loadData()">Second Layer
 	</div>
 </div>
 <div id="mapPanel">
@@ -70,6 +70,9 @@
 	<!--<svg id="mapPieSVG" class="hidden"/>-->
 	<span id="mapPielValue" />
 </div>
+
+<iframe id="barr" src="barr.html"></iframe>
+
 
 <div id="barPanel">
 	<svg id="barSVG" />
